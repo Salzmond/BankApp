@@ -13,10 +13,10 @@ public class Manager {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotBlank
+    //@NotBlank
     private String firstName;
 
-    @NotBlank
+    //@NotBlank
     private String lastName;
     private int status;
     private Timestamp createdAt = new Timestamp(new Date().getTime());

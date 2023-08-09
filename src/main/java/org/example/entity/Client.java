@@ -25,16 +25,16 @@ public class Client {
 
     @NotBlank
     private String lastName;
-    @NotBlank
+    //@NotBlank
     private String email;
-    @NotBlank
+    //@NotBlank
     private String address;
-    @NotBlank
+   //@NotBlank
     private String phone;
     private Timestamp createdAt = new Timestamp(new Date().getTime());
     private Timestamp updatedAt = new Timestamp(new Date().getTime());
 
-    public Client(long id, ManagerDto manager, int status, String taxCode, String firstName, String lastName, String email, String address, String phone, Timestamp createdAt, Timestamp updatedAt) {
+    public Client() {
         //
     }
 

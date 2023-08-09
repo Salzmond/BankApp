@@ -19,10 +19,6 @@ public class ClientDto {
     private Timestamp createdAt = new Timestamp(new Date().getTime());
     private Timestamp updatedAt = new Timestamp(new Date().getTime());
 
-    public ClientDto(long id, Manager manager, int status, String taxCode, String firstName, String lastName, String email, String address, String phone, Timestamp createdAt, Timestamp updatedAt) {
-        //
-    }
-
     public ClientDto(long id, ManagerDto manager, int status, String taxCode,
                      String firstName, String lastName, String email,
                      String address, String phone, Timestamp createdAt,
@@ -48,12 +44,12 @@ public class ClientDto {
         this.id = id;
     }
 
-    public ManagerDto getManager() {
+    public ManagerDto getManagerDto() {
         return managerDto;
     }
 
-    public void setManager(ManagerDto manager) {
-        this.managerDto = manager;
+    public void setManagerDto(ManagerDto managerDto) {
+        this.managerDto = managerDto;
     }
 
     public int getStatus() {
