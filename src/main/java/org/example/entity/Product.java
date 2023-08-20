@@ -57,6 +57,14 @@ public class Product {
         this.id = id;
     }
 
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public Manager getManager() {
         return manager;
     }

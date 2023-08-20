@@ -48,6 +48,14 @@ public class Agreement {
         this.id = id;
     }
 
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public Account getAccount() {
         return account;
     }

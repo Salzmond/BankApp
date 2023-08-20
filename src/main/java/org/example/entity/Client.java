@@ -1,11 +1,11 @@
 package org.example.entity;
 
-import org.example.model.dto.ManagerDto;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "client")
@@ -17,6 +17,9 @@ public class Client {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
     private Manager manager;
+
+    @OneToMany(mappedBy = "client")
+    private List<Account> accounts = new ArrayList<>();
     private int status;
     private String taxCode;
 
@@ -25,11 +28,11 @@ public class Client {
 
     @NotBlank
     private String lastName;
-    //@NotBlank
+
     private String email;
-    //@NotBlank
+
     private String address;
-   //@NotBlank
+
     private String phone;
     private Timestamp createdAt = new Timestamp(new Date().getTime());
     private Timestamp updatedAt = new Timestamp(new Date().getTime());
@@ -52,6 +55,22 @@ public class Client {
         this.address = address;
         this.phone = phone;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accountList) {
+        this.accounts = accountList;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 

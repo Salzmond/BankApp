@@ -49,6 +49,14 @@ public class Transaction {
         this.id = id;
     }
 
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Account getDebitAccount() {
         return debitAccount;
     }

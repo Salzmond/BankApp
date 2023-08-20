@@ -3,7 +3,9 @@ package org.example.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "manager")
@@ -13,10 +15,16 @@ public class Manager {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    //@NotBlank
+    @NotBlank
     private String firstName;
 
-    //@NotBlank
+    @OneToMany(mappedBy = "manager")
+    private List<Client> clients =new ArrayList<>();
+
+    @OneToMany(mappedBy = "manager")
+    private List<Product> products = new ArrayList<>();
+
+    @NotBlank
     private String lastName;
     private int status;
     private Timestamp createdAt = new Timestamp(new Date().getTime());
@@ -33,6 +41,30 @@ public class Manager {
         this.lastName = lastName;
         this.status = status;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 

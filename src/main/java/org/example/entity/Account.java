@@ -6,7 +6,9 @@ import org.example.model.enums.CurrencyCode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -18,6 +20,10 @@ public class Account {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
+
+    @OneToMany(mappedBy = "account")
+    private List<Agreement> agreements = new ArrayList<>();
+
     private String name;
     @Enumerated(EnumType.STRING)
     private AccountType type;
@@ -55,6 +61,22 @@ public class Account {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Agreement> getAgreements() {
+        return agreements;
+    }
+
+    public void setAgreements(List<Agreement> agreements) {
+        this.agreements = agreements;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Client getClient() {
