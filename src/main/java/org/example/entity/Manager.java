@@ -8,11 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "manager")
+@Table(name = "managers")
 public class Manager {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank
@@ -27,21 +27,20 @@ public class Manager {
     @NotBlank
     private String lastName;
     private int status;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public Manager() {
         //
     }
 
-    public Manager(long id, String firstName, String lastName, int status,
-                   Timestamp createdAt, Timestamp updatedAt) {
+    public Manager(long id, String firstName, String lastName, int status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = new Timestamp(new Date().getTime());
+        this.updatedAt = new Timestamp(new Date().getTime());
     }
 
     public List<Product> getProducts() {

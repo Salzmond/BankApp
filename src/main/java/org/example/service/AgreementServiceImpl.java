@@ -21,27 +21,30 @@ public class AgreementServiceImpl implements AgreementService {
 
     @Override
     public Agreement getById(long id) {
-        return agreementRepository.getReferenceById(id);
+        return agreementRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Agreement with id %d not found", id)));
     }
 
     @Override
-    public List<Agreement> search(Product product, int status) {
-        return agreementRepository.search(product, status);
+    public List<Agreement> search(Product product) {
+        List<Agreement> agreements = agreementRepository.search(product);
+        if(agreements.isEmpty()) {
+            throw new IllegalArgumentException("No agreements found");
+        }
+        return agreements;
     }
 
     @Override
     public Agreement create(Agreement agreement) {
-        Agreement agreementEntity;
-        agreementEntity = getById(agreement.getId());
-        if (agreementEntity == null) {
-            agreementEntity = agreementRepository.save(agreement);
+        Agreement agreementEntity = search(agreement.getProduct()).get(0);
+        if (agreementEntity != null) {
+            throw new IllegalStateException("This agreement already exists");
         }
-
-        return agreementEntity;
+        return agreementRepository.save(agreement);
     }
 
     @Override
     public void deleteAgreementById(long id) {
-        agreementRepository.deleteById(id);
+        agreementRepository.delete(getById(id));
     }
 }

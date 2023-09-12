@@ -20,26 +20,30 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Manager getById(long id) {
-        return managerRepository.getReferenceById(id);
+        return managerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Manager with id %d not exists", id)));
     }
 
     @Override
     public List<Manager> search(String firstName, String lastName) {
-        return managerRepository.search(firstName, lastName);
+        List<Manager> managers = managerRepository.search(firstName, lastName);
+        if (managers.isEmpty()) {
+            throw new IllegalArgumentException("No manager found");
+        }
+        return managers;
     }
 
     @Override
     public Manager create(Manager manager) {
-        Manager managerEntity;
-        managerEntity = getById(manager.getId());
-        if (managerEntity == null) {
-            managerEntity = managerRepository.save(manager);
+        Manager managerEntity = search(manager.getFirstName(), manager.getLastName()).get(0);
+        if (managerEntity != null) {
+            throw new IllegalStateException("This manager already exists in system");
         }
-        return managerEntity;
+        return managerRepository.save(manager);
     }
 
     @Override
     public void deleteManagerById(long id) {
-        managerRepository.deleteById(id);
+        managerRepository.delete(getById(id));
     }
 }

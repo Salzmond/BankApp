@@ -7,8 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AccountRepository extends JpaRepository<Account, Long> {
+public interface AccountRepository extends JpaRepository<Account, String> {
 
-    @Query("SELECT acc FROM Account acc WHERE acc.name = :name AND acc.status = :status")
-    List<Account> search(@Param("name") String name, @Param("name") int status);
+    @Query("SELECT acc FROM Account acc WHERE acc.client.firstName = :firstname AND acc.client.lastName = :lastName")
+    List<Account> search(@Param("firstname") String firstName, @Param("lastName") String lastName);
 }

@@ -1,52 +1,57 @@
 package org.example.model.dto;
 
-import org.example.entity.Client;
 import org.example.model.enums.AccountStatus;
 import org.example.model.enums.AccountType;
 import org.example.model.enums.CurrencyCode;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 
 public class AccountDto {
-    private long id;
-    private Client client;
+    private String iban;
+    private ClientDto client;
     private String name;
     private AccountType type;
     private AccountStatus status;
-    private double balance;
+    private BigDecimal balance;
     private CurrencyCode currencyCode;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
-    public AccountDto(long id, Client client, String name, AccountType type,
-                      AccountStatus status, double balance,
-                      CurrencyCode currencyCode, Timestamp createdAt,
-                      Timestamp updatedAt) {
-        this.id = id;
+    public AccountDto(String iban, ClientDto client, String name, AccountType type,
+                      AccountStatus status, BigDecimal balance,
+                      CurrencyCode currencyCode) {
+        this.iban = iban;
         this.client = client;
         this.name = name;
         this.type = type;
         this.status = status;
         this.balance = balance;
         this.currencyCode = currencyCode;
+        this.createdAt = new Timestamp(new Date().getTime());
+        this.updatedAt = new Timestamp(new Date().getTime());
+    }
+
+    public AccountDto(String iban, CurrencyCode currencyCode, Timestamp createdAt) {
+        this.iban = iban;
+        this.currencyCode = currencyCode;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    public long getId() {
-        return id;
+    public String getIban() {
+        return iban;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
-    public Client getClient() {
+    public ClientDto getClient() {
         return client;
     }
 
-    public void setClient(Client client) {
+    public void setClient(ClientDto client) {
         this.client = client;
     }
 
@@ -74,11 +79,11 @@ public class AccountDto {
         this.status = status;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -101,7 +106,7 @@ public class AccountDto {
     @Override
     public String toString() {
         return "AccountDto{" +
-                "id=" + id +
+                "id=" + iban +
                 ", client=" + client +
                 ", name='" + name + '\'' +
                 ", type=" + type +

@@ -21,26 +21,30 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getById(long id) {
-        return productRepository.getReferenceById(id);
+        return productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Product with id %d not found", id)));
     }
 
     @Override
     public List<Product> search(String name, CurrencyCode currencyCode) {
-        return productRepository.search(name, currencyCode);
+        List<Product> products = productRepository.search(name, currencyCode);
+        if (products.isEmpty()) {
+            throw new IllegalArgumentException("No product found");
+        }
+        return products;
     }
 
     @Override
     public Product create(Product product) {
-        Product productEntity;
-        productEntity = getById(product.getId());
-        if (productEntity == null) {
-            productEntity = productRepository.save(product);
+        Product productEntity = search(product.getName(), product.getCurrencyCode()).get(0);
+        if (productEntity != null) {
+            throw new IllegalStateException("This product already exists");
         }
-        return productEntity;
+        return productRepository.save(product);
     }
 
     @Override
     public void deleteProductById(long id) {
-        productRepository.deleteById(id);
+        productRepository.delete(getById(id));
     }
 }

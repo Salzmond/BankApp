@@ -5,14 +5,14 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@Table(name = "agreement")
+@Table(name = "agreements")
 public class Agreement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JoinColumn(name = "account_id", referencedColumnName = "iban")
     private Account account;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
@@ -20,24 +20,23 @@ public class Agreement {
     private double interestRate;
     private int status;
     private double sum;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public Agreement() {
         //
     }
 
     public Agreement(long id, Account account, Product product,
-                     double interestRate, int status, double sum, Timestamp createdAt,
-                     Timestamp updatedAt) {
+                     double interestRate, int status, double sum) {
         this.id = id;
         this.account = account;
         this.product = product;
         this.interestRate = interestRate;
         this.status = status;
         this.sum = sum;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = new Timestamp(new Date().getTime());
+        this.updatedAt = new Timestamp(new Date().getTime());
     }
 
     public long getId() {

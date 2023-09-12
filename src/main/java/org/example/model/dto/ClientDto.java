@@ -1,9 +1,6 @@
 package org.example.model.dto;
 
-import org.example.entity.Manager;
-
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class ClientDto {
 
@@ -16,8 +13,8 @@ public class ClientDto {
     private String email;
     private String address;
     private String phone;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public ClientDto(long id, ManagerDto manager, int status, String taxCode,
                      String firstName, String lastName, String email,

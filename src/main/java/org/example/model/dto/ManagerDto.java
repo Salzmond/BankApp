@@ -9,8 +9,8 @@ public class ManagerDto {
     private String firstName;
     private String lastName;
     private int status;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public ManagerDto() {
         //

@@ -5,18 +5,18 @@ import org.example.model.enums.AccountType;
 import org.example.model.enums.CurrencyCode;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private String iban;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
@@ -24,43 +24,48 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<Agreement> agreements = new ArrayList<>();
 
+    @OneToMany(mappedBy = "debitAccount", cascade = CascadeType.ALL)
+    private List<Transaction> debitTransactions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "creditAccount", cascade = CascadeType.ALL)
+    private List<Transaction> creditTransactions = new ArrayList<>();
+
     private String name;
     @Enumerated(EnumType.STRING)
     private AccountType type;
     @Enumerated(EnumType.STRING)
     private AccountStatus status;
-    private double balance;
+    private BigDecimal balance;
 
     @Enumerated(EnumType.STRING)
     private CurrencyCode currencyCode;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public Account() {
         //
     }
 
-    public Account(long id, Client client, String name, AccountType type,
-                   AccountStatus status, double balance,
-                   CurrencyCode currencyCode, Timestamp createdAt,
-                   Timestamp updatedAt) {
-        this.id = id;
+    public Account(String iban, Client client, String name, AccountType type,
+                   AccountStatus status, BigDecimal balance,
+                   CurrencyCode currencyCode) {
+        this.iban = iban;
         this.client = client;
         this.name = name;
         this.type = type;
         this.status = status;
         this.balance = balance;
         this.currencyCode = currencyCode;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = new Timestamp(new Date().getTime());
+        this.updatedAt = new Timestamp(new Date().getTime());
     }
 
-    public long getId() {
-        return id;
+    public String getIban() {
+        return iban;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     public List<Agreement> getAgreements() {
@@ -69,6 +74,22 @@ public class Account {
 
     public void setAgreements(List<Agreement> agreements) {
         this.agreements = agreements;
+    }
+
+    public List<Transaction> getDebitTransactions() {
+        return debitTransactions;
+    }
+
+    public void setDebitTransactions(List<Transaction> debitTransactions) {
+        this.debitTransactions = debitTransactions;
+    }
+
+    public List<Transaction> getCreditTransactions() {
+        return creditTransactions;
+    }
+
+    public void setCreditTransactions(List<Transaction> creditTransactions) {
+        this.creditTransactions = creditTransactions;
     }
 
     public void setCreatedAt(Timestamp createdAt) {
@@ -111,11 +132,11 @@ public class Account {
         this.status = status;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -138,8 +159,11 @@ public class Account {
     @Override
     public String toString() {
         return "Account{" +
-                "id=" + id +
+                "iban='" + iban + '\'' +
                 ", client=" + client +
+                ", agreements=" + agreements +
+                ", debitTransactions=" + debitTransactions +
+                ", creditTransactions=" + creditTransactions +
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", status=" + status +

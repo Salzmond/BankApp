@@ -8,11 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "client")
+@Table(name = "clients")
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
@@ -34,8 +34,8 @@ public class Client {
     private String address;
 
     private String phone;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public Client() {
         //
@@ -43,8 +43,7 @@ public class Client {
 
     public Client(long id, Manager manager, int status, String taxCode,
                   String firstName, String lastName, String email,
-                  String address, String phone, Timestamp createdAt,
-                  Timestamp updatedAt) {
+                  String address, String phone) {
         this.id = id;
         this.manager = manager;
         this.status = status;
@@ -54,8 +53,14 @@ public class Client {
         this.email = email;
         this.address = address;
         this.phone = phone;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = new Timestamp(new Date().getTime());
+        this.updatedAt = new Timestamp(new Date().getTime());
+    }
+
+    public Client(String address, String phone) {
+        this.address = address;
+        this.phone = phone;
+        this.updatedAt = new Timestamp(new Date().getTime());
     }
 
     public List<Account> getAccounts() {

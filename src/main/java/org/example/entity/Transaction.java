@@ -3,42 +3,57 @@ package org.example.entity;
 import org.example.model.enums.TransactionType;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "transactions")
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "debit_account_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "debit_account_id", referencedColumnName = "iban")
     private Account debitAccount;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "credit_account_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "credit_account_id", referencedColumnName = "iban")
     private Account creditAccount;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
-    private double amount;
+    private BigDecimal amount;
     private String description;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
 
     public Transaction() {
         //
     }
 
     public Transaction(long id, Account debitAccount, Account creditAccount,
-                       TransactionType transactionType, double amount, String description,
-                       Timestamp createdAt) {
+                       TransactionType transactionType, BigDecimal amount, String description) {
         this.id = id;
         this.debitAccount = debitAccount;
         this.creditAccount = creditAccount;
         this.transactionType = transactionType;
         this.amount = amount;
         this.description = description;
-        this.createdAt = createdAt;
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+    }
+
+    public Transaction(Account debitAccount, Account creditAccount, TransactionType transactionType, BigDecimal amount, String description) {
+        this.debitAccount = debitAccount;
+        this.creditAccount = creditAccount;
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.description = description;
+    }
+
+    public Transaction(Account debitAccount, TransactionType transactionType, BigDecimal amount) {
+        this.debitAccount = debitAccount;
+        this.transactionType = transactionType;
+        this.amount = amount;
     }
 
     public long getId() {
@@ -81,11 +96,11 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

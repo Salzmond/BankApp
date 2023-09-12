@@ -9,11 +9,11 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
@@ -28,16 +28,15 @@ public class Product {
     private CurrencyCode currencyCode;
     private double interestRate;
     private int productLimit;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public Product() {
         //
     }
 
     public Product(long id, Manager manager, String name, ProductStatus status,
-                   CurrencyCode currencyCode, double interestRate, int productLimit,
-                   Timestamp createdAt, Timestamp updatedAt) {
+                   CurrencyCode currencyCode, double interestRate, int productLimit) {
         this.id = id;
         this.manager = manager;
         this.name = name;
@@ -45,8 +44,8 @@ public class Product {
         this.currencyCode = currencyCode;
         this.interestRate = interestRate;
         this.productLimit = productLimit;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = new Timestamp(new Date().getTime());
+        this.updatedAt = new Timestamp(new Date().getTime());
     }
 
     public long getId() {

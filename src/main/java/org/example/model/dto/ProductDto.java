@@ -10,7 +10,7 @@ import java.util.Date;
 public class ProductDto {
 
     private long id;
-    private Manager manager;
+    private ManagerDto manager;
     private String name;
     private ProductStatus status;
     private CurrencyCode currencyCode;
@@ -23,10 +23,22 @@ public class ProductDto {
         //
     }
 
-    public ProductDto(long id, Manager manager, String name, ProductStatus status,
+    public ProductDto(long id, ManagerDto manager, String name, ProductStatus status,
                       CurrencyCode currencyCode, double interestRate, int productLimit,
                       Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
+        this.manager = manager;
+        this.name = name;
+        this.status = status;
+        this.currencyCode = currencyCode;
+        this.interestRate = interestRate;
+        this.productLimit = productLimit;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public ProductDto(ManagerDto manager, String name, ProductStatus status, CurrencyCode currencyCode,
+                      double interestRate, int productLimit, Timestamp createdAt, Timestamp updatedAt) {
         this.manager = manager;
         this.name = name;
         this.status = status;
@@ -45,11 +57,11 @@ public class ProductDto {
         this.id = id;
     }
 
-    public Manager getManager() {
+    public ManagerDto getManager() {
         return manager;
     }
 
-    public void setManager(Manager manager) {
+    public void setManager(ManagerDto manager) {
         this.manager = manager;
     }
 

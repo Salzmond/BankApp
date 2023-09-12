@@ -9,24 +9,23 @@ import java.util.Date;
 public class AgreementDto {
 
     private long id;
-    private Account account;
-    private Product product;
+    private AccountDto account;
+    private ProductDto product;
     private double interestRate;
     private int status;
     private double sum;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
-    public AgreementDto(long id, Account account, Product product, double interestRate,
-                        int status, double sum, Timestamp createdAt, Timestamp updatedAt) {
-        this.id = id;
+    public AgreementDto(AccountDto account, ProductDto product, double interestRate,
+                        int status, double sum) {
         this.account = account;
         this.product = product;
         this.interestRate = interestRate;
         this.status = status;
         this.sum = sum;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = new Timestamp(new Date().getTime());
+        this.updatedAt = new Timestamp(new Date().getTime());
     }
 
     public long getId() {
@@ -37,19 +36,19 @@ public class AgreementDto {
         this.id = id;
     }
 
-    public Account getAccount() {
+    public AccountDto getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(AccountDto account) {
         this.account = account;
     }
 
-    public Product getProduct() {
+    public ProductDto getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductDto product) {
         this.product = product;
     }
 

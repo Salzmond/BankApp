@@ -1,35 +1,34 @@
 package org.example.model.dto;
 
-import org.example.entity.Account;
 import org.example.model.enums.TransactionType;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 
 public class TransactionDto {
 
     private long id;
-    private Account debitAccount;
-    private Account creditAccount;
+    private AccountDto debitAccount;
+    private AccountDto creditAccount;
     private TransactionType transactionType;
-    private double amount;
+    private BigDecimal amount;
     private String description;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
 
     public TransactionDto() {
         //
     }
 
-    public TransactionDto(long id, Account debitAccount, Account creditAccount,
-                          TransactionType transactionType, double amount, String description,
-                          Timestamp createdAt) {
+    public TransactionDto(long id, AccountDto debitAccount, AccountDto creditAccount,
+                          TransactionType transactionType, BigDecimal amount, String description) {
         this.id = id;
         this.debitAccount = debitAccount;
         this.creditAccount = creditAccount;
         this.transactionType = transactionType;
         this.amount = amount;
         this.description = description;
-        this.createdAt = createdAt;
+        this.createdAt = new Timestamp(new Date().getTime());
     }
 
     public long getId() {
@@ -40,19 +39,19 @@ public class TransactionDto {
         this.id = id;
     }
 
-    public Account getDebitAccount() {
+    public AccountDto getDebitAccount() {
         return debitAccount;
     }
 
-    public void setDebitAccount(Account debitAccount) {
+    public void setDebitAccount(AccountDto debitAccount) {
         this.debitAccount = debitAccount;
     }
 
-    public Account getCreditAccount() {
+    public AccountDto getCreditAccount() {
         return creditAccount;
     }
 
-    public void setCreditAccount(Account creditAccount) {
+    public void setCreditAccount(AccountDto creditAccount) {
         this.creditAccount = creditAccount;
     }
 
@@ -64,11 +63,11 @@ public class TransactionDto {
         this.transactionType = transactionType;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

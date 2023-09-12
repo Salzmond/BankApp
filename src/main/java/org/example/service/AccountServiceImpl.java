@@ -5,6 +5,7 @@ import org.example.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -19,27 +20,31 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getById(long id) {
-        return accountRepository.getReferenceById(id);
+    public Account getByIban(String iban) {
+        return accountRepository.findById(iban)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Account with IBAN %s not found", iban)));
     }
 
     @Override
-    public List<Account> search(String name, int status) {
-        return accountRepository.search(name, status);
+    public List<Account> search(String firstName, String lastName) {
+        List<Account> accounts = accountRepository.search(firstName, lastName);
+        if(accounts.isEmpty()) {
+            throw new IllegalArgumentException("No account found");
+        }
+        return accounts;
     }
 
     @Override
     public Account create(Account account) {
-        Account accountEntity;
-        accountEntity = getById(account.getId());
-        if (accountEntity == null) {
-            accountEntity = accountRepository.save(account);
+        Account accountEntity = getByIban(account.getIban());
+        if (accountEntity != null) {
+            throw new IllegalStateException("This account already exists in system");
         }
-        return accountEntity;
+        return accountRepository.save(account);
     }
 
     @Override
-    public void deleteAccountById(long id) {
-        accountRepository.deleteById(id); //?
+    public void deleteAccountById(String iban) {
+        accountRepository.delete(getByIban(iban));
     }
 }
