@@ -11,8 +11,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>org.msvstup</groupId>
-    <artifactId>msvstup</artifactId>
+    <groupId>com.salzmond</groupId>
+    <artifactId>bankapp</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
