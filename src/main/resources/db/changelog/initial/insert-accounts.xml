@@ -1,0 +1,50 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog-ext
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1309202305" author="KE">
+        <insert tableName="accounts">
+            <column name="iban" value="DE0101238974167523"/>
+            <column name="name" value="My account"/>
+            <column name="currency_code" value="EUR"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="balance" valueComputed="1750"/>
+            <column name="type" value="DEBIT"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="client_id" valueComputed="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="1309202306" author="KE">
+        <insert tableName="accounts">
+            <column name="iban" value="1234567899874521"/>
+            <column name="name" value="My account"/>
+            <column name="currency_code" value="USD"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="balance" valueComputed="2000"/>
+            <column name="type" value="DEBIT"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="client_id" valueComputed="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="1409202306" author="KE">
+        <insert tableName="accounts">
+            <column name="iban" value="DE1202314567896514"/>
+            <column name="name" value="My account"/>
+            <column name="currency_code" value="USD"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="balance" valueComputed="2000"/>
+            <column name="type" value="DEBIT"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="client_id" valueComputed="3"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

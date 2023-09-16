@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import org.example.entity.Client;
 import org.example.model.dto.ClientDto;
 import org.example.model.dto.ClientUpdateDto;
 import org.example.service.ClientService;

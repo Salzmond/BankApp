@@ -1,9 +1,11 @@
 package org.example.service;
 
 import org.example.entity.Transaction;
+import org.example.model.enums.CurrencyCode;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface TransactionService {
 
@@ -11,13 +13,7 @@ public interface TransactionService {
 
     List<Transaction> search(double amount);
 
-    Transaction putMoneyIntoTheAccountViaATM(String iban, int amount);
-
-    Transaction withdrawMoneyFromTheAccountViaATM(String iban, int amount);
-
     Transaction transferMoneyBetweenAccounts(String ibanFrom, String ibanTo, double amount, String description);
 
-    Transaction cancelTransaction(long id);
-
-    void deleteTransaction(long id);
+    Double getCurrencyRate(String from, String to);
 }

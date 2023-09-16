@@ -10,8 +10,12 @@ import org.example.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -24,11 +28,15 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private CurrencyApiService currencyApiService;
+
     @Override
     public Transaction getById(long id) {
         return transactionRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Transaction with id %d not found", id)));
     }
+
     @Override
     public List<Transaction> search(double amount) {
         List<Transaction> transactions = transactionRepository.search((amount - RANGE), (amount + RANGE));
@@ -37,27 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return transactions;
     }
-
-    @Override
-    public Transaction putMoneyIntoTheAccountViaATM(String iban, int amount) {
-        Account account = accountService.getByIban(iban);
-        if (!account.getStatus().equals(AccountStatus.ACTIVE)) {
-            throw new AccountNotActiveException("You account not active");
-        }
-        account.setBalance(account.getBalance().add(BigDecimal.valueOf(amount)));
-        return transactionRepository.save(new Transaction(account, TransactionType.REPLENISHMENT, BigDecimal.valueOf(amount)));
-    }
-
-    @Override
-    public Transaction withdrawMoneyFromTheAccountViaATM(String iban, int amount) {
-        Account account = accountService.getByIban(iban);
-        if (account.getBalance().compareTo(BigDecimal.valueOf(amount)) < 0) {
-            throw new UnsupportedTransactionException("You have not enough money on your account");
-        }
-        account.setBalance(account.getBalance().subtract(BigDecimal.valueOf(amount)));
-        return transactionRepository.save(new Transaction(account, TransactionType.WITHDRAWAL, BigDecimal.valueOf(amount)));
-    }
-
+    @Transactional
     @Override
     public Transaction transferMoneyBetweenAccounts(String ibanFrom, String ibanTo, double amount, String description) {
         Account accountFrom = accountService.getByIban(ibanFrom);
@@ -66,17 +54,15 @@ public class TransactionServiceImpl implements TransactionService {
             throw new UnsupportedTransactionException("You have not enough money on your account");
         }
         accountFrom.setBalance(accountFrom.getBalance().subtract(BigDecimal.valueOf(amount)));
-        accountTo.setBalance(accountTo.getBalance().add(BigDecimal.valueOf(amount)));
+        accountFrom.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        Double currencyRate = getCurrencyRate(accountFrom.getCurrencyCode().name(), accountTo.getCurrencyCode().name());
+        accountTo.setBalance(accountTo.getBalance().add(BigDecimal.valueOf(amount * currencyRate)));
+
         return transactionRepository.save(new Transaction(accountFrom, accountTo, TransactionType.WITHDRAWAL, BigDecimal.valueOf(amount), description));
     }
-
     @Override
-    public Transaction cancelTransaction(long id) {
-        return null;
-    }
-
-    @Override
-    public void deleteTransaction(long id) {
-        transactionRepository.delete(getById(id));
+    public Double getCurrencyRate(String from, String to) {
+        Map<String, Double> currencyMap = currencyApiService.getCurrencyMap(from);
+        return currencyMap.get(to.toUpperCase());
     }
 }
