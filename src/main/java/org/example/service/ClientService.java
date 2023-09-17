@@ -1,7 +1,6 @@
 package org.example.service;
 
 import org.example.entity.Client;
-import org.example.model.dto.ClientUpdateDto;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface ClientService {
 
     Client create(Client client);
 
-    void deleteClientById(long id);
+    void deleteById(long id);
 
     Client update(long id, Client client);
 }

@@ -4,7 +4,7 @@ import org.example.model.enums.TransactionType;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class TransactionDto {
 
@@ -28,7 +28,7 @@ public class TransactionDto {
         this.transactionType = transactionType;
         this.amount = amount;
         this.description = description;
-        this.createdAt = new Timestamp(new Date().getTime());
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public long getId() {

@@ -42,10 +42,10 @@ public class ManagerController {
         return converter.toDto((managerService.getById(id)));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable("id") long id) {
-        managerService.deleteManagerById(id);
+        managerService.deleteById(id);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

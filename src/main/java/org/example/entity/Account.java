@@ -7,8 +7,8 @@ import org.example.model.enums.CurrencyCode;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,12 +17,12 @@ public class Account {
 
     @Id
     private String iban;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
-    @OneToMany(mappedBy = "account")
-    private List<Agreement> agreements = new ArrayList<>();
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    private Agreement agreement;
 
     @OneToMany(mappedBy = "debitAccount", cascade = CascadeType.ALL)
     private List<Transaction> debitTransactions = new ArrayList<>();
@@ -56,8 +56,16 @@ public class Account {
         this.status = status;
         this.balance = balance;
         this.currencyCode = currencyCode;
-        this.createdAt = new Timestamp(new Date().getTime());
-        this.updatedAt = new Timestamp(new Date().getTime());
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    }
+
+    public Account(String iban, String name, BigDecimal balance,
+                   CurrencyCode currencyCode) {
+        this.iban = iban;
+        this.name = name;
+        this.balance = balance;
+        this.currencyCode = currencyCode;
     }
 
     public String getIban() {
@@ -68,12 +76,12 @@ public class Account {
         this.iban = iban;
     }
 
-    public List<Agreement> getAgreements() {
-        return agreements;
+    public Agreement getAgreement() {
+        return agreement;
     }
 
-    public void setAgreements(List<Agreement> agreements) {
-        this.agreements = agreements;
+    public void setAgreement(Agreement agreement) {
+        this.agreement = agreement;
     }
 
     public List<Transaction> getDebitTransactions() {
@@ -161,7 +169,7 @@ public class Account {
         return "Account{" +
                 "iban='" + iban + '\'' +
                 ", client=" + client +
-                ", agreements=" + agreements +
+                ", agreements=" + agreement +
                 ", debitTransactions=" + debitTransactions +
                 ", creditTransactions=" + creditTransactions +
                 ", name='" + name + '\'' +

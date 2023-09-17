@@ -1,7 +1,6 @@
 package org.example.model.dto;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class ManagerDto {
 
@@ -14,6 +13,13 @@ public class ManagerDto {
 
     public ManagerDto() {
         //
+    }
+
+    public ManagerDto(long id, String firstName, String lastName, int status) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.status = status;
     }
 
     public ManagerDto(long id, String firstName, String lastName, int status,

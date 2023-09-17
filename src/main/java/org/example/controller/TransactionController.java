@@ -33,6 +33,4 @@ public class TransactionController {
         return converter.toDto(transactionService.transferMoneyBetweenAccounts(transactionCreate.getIbanFrom(),
                 transactionCreate.getIbanTo(),transactionCreate.getAmount(), transactionCreate.getDescription()));
     }
-
-
 }

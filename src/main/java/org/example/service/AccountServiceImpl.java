@@ -6,7 +6,6 @@ import org.example.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,9 +29,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> search(String firstName, String lastName) {
+    public List<Account> searchByClient(String firstName, String lastName) {
         List<Account> accounts = accountRepository.search(firstName, lastName);
-        if(accounts.isEmpty()) {
+        if (accounts.isEmpty()) {
             throw new IllegalArgumentException("No account found");
         }
         return accounts;
@@ -42,7 +41,7 @@ public class AccountServiceImpl implements AccountService {
     public Account create(Account account) {
         Account accountEntity = getByIban(account.getIban());
         if (accountEntity != null) {
-            throw new IllegalStateException("This account already exists in system");
+            throw new IllegalArgumentException("This account already exists in system");
         }
         return accountRepository.save(account);
     }
@@ -58,12 +57,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void retrievingAccountBalance(String iban) {
-
+    public String retrievingAccountBalance(String iban) {
+        Account account = getByIban(iban);
+        String balance = account.getBalance() + " " + account.getCurrencyCode();
+        return balance;
     }
 
     @Override
-    public void deleteAccountById(String iban) {
+    public void deleteAccountByIban(String iban) {
         accountRepository.delete(getByIban(iban));
     }
 }

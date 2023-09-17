@@ -1,14 +1,16 @@
 package org.example.controller;
 
-import org.example.entity.Account;
 import org.example.model.dto.AccountDto;
+import org.example.model.dto.TransactionDto;
 import org.example.service.AccountService;
 import org.example.service.dtoconverter.AccountDtoConverter;
+import org.example.service.dtoconverter.TransactionDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,9 @@ public class AccountController {
     @Autowired
     private AccountDtoConverter converter;
 
+    @Autowired
+    private TransactionDtoConverter transactionConverter;
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<AccountDto> getAll() {
@@ -37,16 +42,29 @@ public class AccountController {
         return converter.toDto(accountService.create(converter.toEntity(accountDto)));
     }
 
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
-    public AccountDto getById(@PathVariable("id") String iban) {
+    @GetMapping("/{iban}")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountDto getByIban(@PathVariable("iban") String iban) {
         return converter.toDto(accountService.getByIban(iban));
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/balance/{iban}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable("id") String iban) {
-        accountService.deleteAccountById(iban);
+    public String retrievingAccountBalance(@PathVariable("iban") String iban) {
+        return accountService.retrievingAccountBalance(iban);
+    }
+
+    @GetMapping("/history/{iban}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TransactionDto> getTransactionsHistoryOfAccount(@PathVariable("iban") String iban) {
+        return accountService.transactionHistory(iban).stream()
+                .map(transactionConverter::toDto).collect(Collectors.toList());
+    }
+
+    @DeleteMapping("/{iban}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteByIban(@PathVariable("iban") String iban) {
+        accountService.deleteAccountByIban(iban);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST) //for Validation

@@ -1,7 +1,6 @@
 package org.example.service;
 
 import org.example.entity.Client;
-import org.example.model.dto.ClientUpdateDto;
 import org.example.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +46,7 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public void deleteClientById(long id) {
+    public void deleteById(long id) {
         clientRepository.delete(getById(id));
     }
 

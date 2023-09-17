@@ -2,7 +2,7 @@ package org.example.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "agreements")
@@ -11,10 +11,10 @@ public class Agreement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "account_id", referencedColumnName = "iban")
     private Account account;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
     private double interestRate;
@@ -35,8 +35,8 @@ public class Agreement {
         this.interestRate = interestRate;
         this.status = status;
         this.sum = sum;
-        this.createdAt = new Timestamp(new Date().getTime());
-        this.updatedAt = new Timestamp(new Date().getTime());
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public long getId() {

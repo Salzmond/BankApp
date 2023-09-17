@@ -25,25 +25,16 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public List<Manager> search(String firstName, String lastName) {
-        List<Manager> managers = managerRepository.search(firstName, lastName);
-        if (managers.isEmpty()) {
-            throw new IllegalArgumentException("No manager found");
-        }
-        return managers;
-    }
-
-    @Override
     public Manager create(Manager manager) {
-        Manager managerEntity = search(manager.getFirstName(), manager.getLastName()).get(0);
+        Manager managerEntity = managerRepository.findByFirstNameAndLastName(manager.getFirstName(), manager.getLastName());
         if (managerEntity != null) {
-            throw new IllegalStateException("This manager already exists in system");
+            throw new IllegalArgumentException("This manager already exists in system");
         }
         return managerRepository.save(manager);
     }
 
     @Override
-    public void deleteManagerById(long id) {
+    public void deleteById(long id) {
         managerRepository.delete(getById(id));
     }
 }

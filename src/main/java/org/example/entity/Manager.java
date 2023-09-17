@@ -3,8 +3,8 @@ package org.example.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,19 +13,17 @@ public class Manager {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @NotBlank
+    @NotBlank(message = "First name ist required")
     private String firstName;
-
+    @NotBlank(message = "Last name is required")
+    private String lastName;
     @OneToMany(mappedBy = "manager")
-    private List<Client> clients =new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
 
     @OneToMany(mappedBy = "manager")
     private List<Product> products = new ArrayList<>();
-
-    @NotBlank
-    private String lastName;
     private int status;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -34,13 +32,13 @@ public class Manager {
         //
     }
 
-    public Manager(long id, String firstName, String lastName, int status) {
+    public Manager(Long id, String firstName, String lastName, int status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
-        this.createdAt = new Timestamp(new Date().getTime());
-        this.updatedAt = new Timestamp(new Date().getTime());
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public List<Product> getProducts() {
@@ -67,11 +65,11 @@ public class Manager {
         this.updatedAt = updatedAt;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

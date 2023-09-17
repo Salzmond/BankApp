@@ -6,8 +6,7 @@ import org.example.model.enums.ProductStatus;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
-import java.util.Date;
-
+import java.time.LocalDateTime;
 @Entity
 @Table(name = "products")
 public class Product {
@@ -15,11 +14,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
     private Manager manager;
 
-    @NotBlank
+    @NotBlank(message = "Product name is required")
     private String name;
 
     @Enumerated(EnumType.STRING)
@@ -44,8 +43,8 @@ public class Product {
         this.currencyCode = currencyCode;
         this.interestRate = interestRate;
         this.productLimit = productLimit;
-        this.createdAt = new Timestamp(new Date().getTime());
-        this.updatedAt = new Timestamp(new Date().getTime());
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public long getId() {

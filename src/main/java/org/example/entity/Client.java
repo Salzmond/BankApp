@@ -3,8 +3,8 @@ package org.example.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,17 +18,18 @@ public class Client {
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
     private Manager manager;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Account> accounts = new ArrayList<>();
     private int status;
     private String taxCode;
 
-    @NotBlank
+    @NotBlank(message = "First name ist required")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Last name is required")
     private String lastName;
 
+    @NotBlank(message = "Email address is required")
     private String email;
 
     private String address;
@@ -40,6 +41,7 @@ public class Client {
     public Client() {
         //
     }
+
 
     public Client(long id, Manager manager, int status, String taxCode,
                   String firstName, String lastName, String email,
@@ -53,14 +55,14 @@ public class Client {
         this.email = email;
         this.address = address;
         this.phone = phone;
-        this.createdAt = new Timestamp(new Date().getTime());
-        this.updatedAt = new Timestamp(new Date().getTime());
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Client(String address, String phone) {
         this.address = address;
         this.phone = phone;
-        this.updatedAt = new Timestamp(new Date().getTime());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public List<Account> getAccounts() {

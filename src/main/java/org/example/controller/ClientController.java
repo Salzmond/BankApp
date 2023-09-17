@@ -53,10 +53,10 @@ public class ClientController {
         return converter.toDto(clientService.getById(id));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable("id") long id) {
-        clientService.deleteClientById(id);
+        clientService.deleteById(id);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST) //for Validation
@@ -67,6 +67,4 @@ public class ClientController {
                 map.put(error.getPropertyPath().toString(), error.getMessage()));
         return map;
     }
-
-
 }

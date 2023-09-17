@@ -57,6 +57,7 @@ public class TransactionServiceImpl implements TransactionService {
         accountFrom.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
         Double currencyRate = getCurrencyRate(accountFrom.getCurrencyCode().name(), accountTo.getCurrencyCode().name());
         accountTo.setBalance(accountTo.getBalance().add(BigDecimal.valueOf(amount * currencyRate)));
+        accountTo.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
 
         return transactionRepository.save(new Transaction(accountFrom, accountTo, TransactionType.WITHDRAWAL, BigDecimal.valueOf(amount), description));
     }
