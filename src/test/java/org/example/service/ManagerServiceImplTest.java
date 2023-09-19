@@ -1,8 +1,10 @@
 package org.example.service;
 
+import org.example.entity.Client;
 import org.example.entity.Manager;
 import org.example.repository.ManagerRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,6 +23,14 @@ class ManagerServiceImplTest {
 
     @InjectMocks
     private ManagerServiceImpl managerService;
+
+    @BeforeEach
+    public void init() {
+//        List<Manager> managers = List.of(
+//                new Manager(1L, "Peter", "Pen",)
+//        );
+//        List<Client> clients = List.of();
+    }
 
     @Test
     void getAll() {

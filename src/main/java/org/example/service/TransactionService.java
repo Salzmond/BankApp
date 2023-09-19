@@ -14,6 +14,4 @@ public interface TransactionService {
     List<Transaction> search(double amount);
 
     Transaction transferMoneyBetweenAccounts(String ibanFrom, String ibanTo, double amount, String description);
-
-    Double getCurrencyRate(String from, String to);
 }

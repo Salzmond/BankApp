@@ -6,6 +6,8 @@ import org.example.repository.AgreementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -22,14 +24,14 @@ public class AgreementServiceImpl implements AgreementService {
     @Override
     public Agreement getById(long id) {
         return agreementRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Agreement with id %d not found", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Agreement with id %d not found", id)));
     }
 
     @Override
     public List<Agreement> search(Product product) {
         List<Agreement> agreements = agreementRepository.search(product);
         if(agreements.isEmpty()) {
-            throw new IllegalArgumentException("No agreements found");
+            throw new EntityNotFoundException("No agreements found");
         }
         return agreements;
     }
@@ -38,7 +40,7 @@ public class AgreementServiceImpl implements AgreementService {
     public Agreement create(Agreement agreement) {
         Agreement agreementEntity = search(agreement.getProduct()).get(0);
         if (agreementEntity != null) {
-            throw new IllegalStateException("This agreement already exists");
+            throw new EntityExistsException("This agreement already exists");
         }
         return agreementRepository.save(agreement);
     }

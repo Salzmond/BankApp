@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entity.Manager;
+import org.example.model.dto.ManagerDto;
 
 import java.util.List;
 
@@ -11,6 +12,8 @@ public interface ManagerService {
     Manager getById(long id);
 
     Manager create(Manager manager);
+
+    Manager findManagerByFirstAndLastName(String firstName, String lastName);
 
     void deleteById(long id);
 }

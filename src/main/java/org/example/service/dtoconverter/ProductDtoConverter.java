@@ -8,24 +8,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductDtoConverter implements Converter<ProductDto, Product> {
 
-    @Autowired
-    private ManagerDtoConverter managerDtoConverter;
+//    @Autowired
+//    private ManagerDtoConverter managerDtoConverter;
 
     public ProductDto toDto(Product product) {
         if (product == null) {
             return null;
         }
-        return new ProductDto(managerDtoConverter.toDto(product.getManager()), product.getName(),
+        return new ProductDto(product.getId(), product.getManager().getFirstName(), product.getManager().getLastName(),
+                product.getName(),
                 product.getStatus(), product.getCurrencyCode(), product.getInterestRate(),
-                product.getProductLimit(), product.getCreatedAt(), product.getUpdatedAt());
+                product.getProductLimit());
     }
 
     public Product toEntity(ProductDto productDto) {
-        return new Product(productDto.getId(),
-                productDto.getManager() == null ?
-                        managerDtoConverter.toEntity(productDto.getManager()) : null,
-                productDto.getName(),
-                productDto.getStatus(), productDto.getCurrencyCode(), productDto.getInterestRate(),
-                productDto.getProductLimit());
+//        return new Product(productDto.getId(),
+//                productDto.getManager() == null ?
+//                        managerDtoConverter.toEntity(productDto.getManager()) : null,
+//                productDto.getName(),
+//                productDto.getStatus(), productDto.getCurrencyCode(), productDto.getInterestRate(),
+//                productDto.getProductLimit());
+        return null;
     }
 }

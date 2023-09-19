@@ -5,6 +5,8 @@ import org.example.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,23 +25,14 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client getById(long id) {
         return clientRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException(String.format("Client with id %d not found", id)));
-    }
-
-    @Override
-    public List<Client> search(String email, String firstName, String lastName) {
-        List<Client> clients = clientRepository.search(email, firstName, lastName);
-        if (clients.isEmpty()) {
-            throw new IllegalArgumentException("No client found");
-        }
-        return clients;
+                () -> new EntityNotFoundException(String.format("Client with id %d not found", id)));
     }
 
     @Override
     public Client create(Client client) {
-        List<Client> clients = search(client.getEmail(), client.getFirstName(), client.getLastName());
-        if (!clients.isEmpty()) {
-            throw new IllegalStateException("This client already exists in system");
+        Client clientEntity = clientRepository.findClientByEmail(client.getEmail());
+        if (clientEntity != null) {
+            throw new EntityExistsException("This client already exists in system");
         }
         return clientRepository.save(client);
     }

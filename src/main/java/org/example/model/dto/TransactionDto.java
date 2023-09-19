@@ -9,22 +9,18 @@ import java.time.LocalDateTime;
 public class TransactionDto {
 
     private long id;
-    private AccountDto debitAccount;
-    private AccountDto creditAccount;
-    private TransactionType transactionType;
-    private BigDecimal amount;
-    private String description;
-    private Timestamp createdAt;
+    private final String debitAccountIban;
+    private final String creditAccountIban;
+    private final TransactionType transactionType;
+    private final BigDecimal amount;
+    private final String description;
+    private final Timestamp createdAt;
 
-    public TransactionDto() {
-        //
-    }
-
-    public TransactionDto(long id, AccountDto debitAccount, AccountDto creditAccount,
+    public TransactionDto(long id, String debitAccountIban, String creditAccountIban,
                           TransactionType transactionType, BigDecimal amount, String description) {
         this.id = id;
-        this.debitAccount = debitAccount;
-        this.creditAccount = creditAccount;
+        this.debitAccountIban = debitAccountIban;
+        this.creditAccountIban = creditAccountIban;
         this.transactionType = transactionType;
         this.amount = amount;
         this.description = description;
@@ -39,44 +35,24 @@ public class TransactionDto {
         this.id = id;
     }
 
-    public AccountDto getDebitAccount() {
-        return debitAccount;
+    public String getDebitAccountIban() {
+        return debitAccountIban;
     }
 
-    public void setDebitAccount(AccountDto debitAccount) {
-        this.debitAccount = debitAccount;
-    }
-
-    public AccountDto getCreditAccount() {
-        return creditAccount;
-    }
-
-    public void setCreditAccount(AccountDto creditAccount) {
-        this.creditAccount = creditAccount;
+    public String getCreditAccountIban() {
+        return creditAccountIban;
     }
 
     public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
-
     public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Timestamp getCreatedAt() {
@@ -87,8 +63,8 @@ public class TransactionDto {
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
-                ", debitAccount=" + debitAccount +
-                ", creditAccount=" + creditAccount +
+                ", debitAccount=" + debitAccountIban +
+                ", creditAccount=" + creditAccountIban +
                 ", transactionType=" + transactionType +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +

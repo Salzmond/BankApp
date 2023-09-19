@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.entity.Account;
 import org.example.entity.Transaction;
+import org.example.model.dto.AccountBalanceInfoDto;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface AccountService {
 
     List<Transaction> transactionHistory(String iban);
 
-    String retrievingAccountBalance(String iban);
+    AccountBalanceInfoDto retrievingAccountBalance(String iban);
 
     void deleteAccountByIban(String iban);
 }

@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.model.dto.AccountBalanceInfoDto;
 import org.example.model.dto.AccountDto;
 import org.example.model.dto.TransactionDto;
 import org.example.service.AccountService;
@@ -50,7 +51,7 @@ public class AccountController {
 
     @GetMapping("/balance/{iban}")
     @ResponseStatus(HttpStatus.OK)
-    public String retrievingAccountBalance(@PathVariable("iban") String iban) {
+    public AccountBalanceInfoDto retrievingAccountBalance(@PathVariable("iban") String iban) {
         return accountService.retrievingAccountBalance(iban);
     }
 

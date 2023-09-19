@@ -32,8 +32,9 @@ public class Client {
     @NotBlank(message = "Email address is required")
     private String email;
 
+    @NotBlank(message = "Address is required")
     private String address;
-
+    @NotBlank(message = "Phone number is required")
     private String phone;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -42,11 +43,9 @@ public class Client {
         //
     }
 
-
-    public Client(long id, Manager manager, int status, String taxCode,
+    public Client(Manager manager, int status, String taxCode,
                   String firstName, String lastName, String email,
                   String address, String phone) {
-        this.id = id;
         this.manager = manager;
         this.status = status;
         this.taxCode = taxCode;

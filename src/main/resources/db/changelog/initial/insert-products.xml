@@ -24,7 +24,7 @@
         <insert tableName="products">
             <column name="id" valueNumeric="2"/>
             <column name="manager_id" valueNumeric="1"/>
-            <column name="name" value="STANDARD_PRIVATE"/>
+            <column name="name" value="AMERICAN_DREAM"/>
             <column name="status" value="ACTIVE"/>
             <column name="currency_code" value="USD"/>
             <column name="interest_rate" valueNumeric="2.5"/>

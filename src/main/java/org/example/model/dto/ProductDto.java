@@ -5,48 +5,39 @@ import org.example.model.enums.CurrencyCode;
 import org.example.model.enums.ProductStatus;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ProductDto {
 
     private long id;
-    private ManagerDto manager;
+    private String managerFirstName;
+
+    private String managerLastName;
     private String name;
     private ProductStatus status;
     private CurrencyCode currencyCode;
     private double interestRate;
     private int productLimit;
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
-    private Timestamp updatedAt = new Timestamp(new Date().getTime());
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public ProductDto() {
         //
     }
 
-    public ProductDto(long id, ManagerDto manager, String name, ProductStatus status,
-                      CurrencyCode currencyCode, double interestRate, int productLimit,
-                      Timestamp createdAt, Timestamp updatedAt) {
+    public ProductDto(long id, String managerFirstName, String managerLastName, String name,
+                      ProductStatus status, CurrencyCode currencyCode, double interestRate, int productLimit) {
         this.id = id;
-        this.manager = manager;
+        this.managerFirstName = managerFirstName;
+        this.managerLastName = managerLastName;
         this.name = name;
         this.status = status;
         this.currencyCode = currencyCode;
         this.interestRate = interestRate;
         this.productLimit = productLimit;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public ProductDto(ManagerDto manager, String name, ProductStatus status, CurrencyCode currencyCode,
-                      double interestRate, int productLimit, Timestamp createdAt, Timestamp updatedAt) {
-        this.manager = manager;
-        this.name = name;
-        this.status = status;
-        this.currencyCode = currencyCode;
-        this.interestRate = interestRate;
-        this.productLimit = productLimit;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public long getId() {
@@ -57,12 +48,20 @@ public class ProductDto {
         this.id = id;
     }
 
-    public ManagerDto getManager() {
-        return manager;
+    public String getManagerFirstName() {
+        return managerFirstName;
     }
 
-    public void setManager(ManagerDto manager) {
-        this.manager = manager;
+    public void setManagerFirstName(String managerFirstName) {
+        this.managerFirstName = managerFirstName;
+    }
+
+    public String getManagerLastName() {
+        return managerLastName;
+    }
+
+    public void setManagerLastName(String managerLastName) {
+        this.managerLastName = managerLastName;
     }
 
     public String getName() {
@@ -115,14 +114,15 @@ public class ProductDto {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductDto{" +
                 "id=" + id +
-                ", manager=" + manager +
+                ", managerFirstName='" + managerFirstName + '\'' +
+                ", managerLastName='" + managerLastName + '\'' +
                 ", name='" + name + '\'' +
                 ", status=" + status +
                 ", currencyCode=" + currencyCode +
                 ", interestRate=" + interestRate +
-                ", limit=" + productLimit +
+                ", productLimit=" + productLimit +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

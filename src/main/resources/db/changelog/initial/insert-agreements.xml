@@ -14,7 +14,7 @@
             <column name="sum" valueNumeric="50000"/>
             <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
-            <column name="account_id" value="1234567899874521"/>
+            <column name="account_id" value="DE0101238974167523"/>
             <column name="product_id" valueNumeric="1"/>
         </insert>
     </changeSet>
@@ -27,7 +27,7 @@
             <column name="sum" valueNumeric="50000"/>
             <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
-            <column name="account_id" value="DE0101238974167523"/>
+            <column name="account_id" value="1234567899874521"/>
             <column name="product_id" valueNumeric="2"/>
         </insert>
     </changeSet>

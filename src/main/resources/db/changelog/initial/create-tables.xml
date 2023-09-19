@@ -40,7 +40,7 @@
             <column name="updated_at" type="TIMESTAMP"/>
             <column name="manager_id" type="BIGINT">
                 <constraints foreignKeyName="manager_fkey" referencedTableName="managers"
-                             referencedColumnNames="id" nullable="false"/>
+                             referencedColumnNames="id" nullable="true"/>
             </column>
         </createTable>
     </changeSet>

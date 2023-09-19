@@ -34,7 +34,6 @@ public class ClientController {
         return clientService.getAll().stream()
                 .map(client -> converter.toDto(client)).collect(Collectors.toList());
     }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ClientDto create(@RequestBody ClientDto clientDto) {

@@ -6,6 +6,8 @@ import org.example.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -22,14 +24,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getById(long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Product with id %d not found", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Product with id %d not found", id)));
     }
 
     @Override
     public List<Product> search(String name, CurrencyCode currencyCode) {
         List<Product> products = productRepository.search(name, currencyCode);
         if (products.isEmpty()) {
-            throw new IllegalArgumentException("No product found");
+            throw new EntityNotFoundException("No product found");
         }
         return products;
     }
@@ -38,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
     public Product create(Product product) {
         Product productEntity = search(product.getName(), product.getCurrencyCode()).get(0);
         if (productEntity != null) {
-            throw new IllegalStateException("This product already exists");
+            throw new EntityExistsException("This product already exists");
         }
         return productRepository.save(product);
     }

@@ -1,11 +1,13 @@
 package org.example.model.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class ClientDto {
 
     private long id;
-    private ManagerDto managerDto;
+    private String managersFirstName;
+    private String managersSecondName;
     private int status;
     private String taxCode;
     private String firstName;
@@ -16,12 +18,13 @@ public class ClientDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public ClientDto(long id, ManagerDto manager, int status, String taxCode,
-                     String firstName, String lastName, String email,
-                     String address, String phone, Timestamp createdAt,
-                     Timestamp updatedAt) {
+    public ClientDto(long id, String managersFirstName,
+                     String managersSecondName, int status, String taxCode,
+                     String firstName, String lastName, String email, String address,
+                     String phone) {
         this.id = id;
-        this.managerDto = manager;
+        this.managersFirstName = managersFirstName;
+        this.managersSecondName = managersSecondName;
         this.status = status;
         this.taxCode = taxCode;
         this.firstName = firstName;
@@ -29,8 +32,8 @@ public class ClientDto {
         this.email = email;
         this.address = address;
         this.phone = phone;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public long getId() {
@@ -41,12 +44,20 @@ public class ClientDto {
         this.id = id;
     }
 
-    public ManagerDto getManagerDto() {
-        return managerDto;
+    public String getManagersFirstName() {
+        return managersFirstName;
     }
 
-    public void setManagerDto(ManagerDto managerDto) {
-        this.managerDto = managerDto;
+    public void setManagersFirstName(String managersFirstName) {
+        this.managersFirstName = managersFirstName;
+    }
+
+    public String getManagersSecondName() {
+        return managersSecondName;
+    }
+
+    public void setManagersSecondName(String managersSecondName) {
+        this.managersSecondName = managersSecondName;
     }
 
     public int getStatus() {
@@ -115,9 +126,9 @@ public class ClientDto {
 
     @Override
     public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", managerDto=" + managerDto +
+        return "ClientDto{" +
+                "managersFirstName='" + managersFirstName + '\'' +
+                ", managersSecondName='" + managersSecondName + '\'' +
                 ", status=" + status +
                 ", taxCode='" + taxCode + '\'' +
                 ", firstName='" + firstName + '\'' +

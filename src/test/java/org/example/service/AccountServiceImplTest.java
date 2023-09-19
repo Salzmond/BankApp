@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entity.Account;
+import org.example.model.dto.AccountBalanceInfoDto;
 import org.example.model.enums.CurrencyCode;
 import org.example.repository.AccountRepository;
 import org.junit.jupiter.api.Assertions;
@@ -69,7 +70,9 @@ class AccountServiceImplTest {
     void retrievingAccountBalance() {
         Account account = new Account("DE1234567890", "Test account", BigDecimal.valueOf(1000), CurrencyCode.CHF);
         Mockito.when(repository.findById(account.getIban())).thenReturn(Optional.of(account));
-        Assertions.assertEquals("1000 CHF", accountService.retrievingAccountBalance(account.getIban()));
+        AccountBalanceInfoDto accountBalanceInfoDto = accountService.retrievingAccountBalance(account.getIban());
+        Assertions.assertEquals(1000, accountBalanceInfoDto.getAmount());
+        Assertions.assertEquals(CurrencyCode.CHF, accountBalanceInfoDto.getCurrency());
     }
 
     @Test

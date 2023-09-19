@@ -1,6 +1,7 @@
 package org.example.model.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class ManagerDto {
 
@@ -8,12 +9,12 @@ public class ManagerDto {
     private String firstName;
     private String lastName;
     private int status;
+
+    private List<String> clientsName;
+
+    private List<String> products;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
-    public ManagerDto() {
-        //
-    }
 
     public ManagerDto(long id, String firstName, String lastName, int status) {
         this.id = id;
@@ -23,11 +24,13 @@ public class ManagerDto {
     }
 
     public ManagerDto(long id, String firstName, String lastName, int status,
-                      Timestamp createdAt, Timestamp updatedAt) {
+                      List<String> clientsName, List<String> products, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
+        this.clientsName = clientsName;
+        this.products = products;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -64,6 +67,22 @@ public class ManagerDto {
         this.status = status;
     }
 
+    public List<String> getClientsName() {
+        return clientsName;
+    }
+
+    public void setClientsName(List<String> clientsName) {
+        this.clientsName = clientsName;
+    }
+
+    public List<String> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<String> products) {
+        this.products = products;
+    }
+
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -74,11 +93,13 @@ public class ManagerDto {
 
     @Override
     public String toString() {
-        return "Manager{" +
+        return "ManagerDto{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", status=" + status +
+                ", clientsName=" + clientsName +
+                ", products=" + products +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

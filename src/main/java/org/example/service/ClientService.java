@@ -10,8 +10,6 @@ public interface ClientService {
 
     Client getById(long id);
 
-    List<Client> search(String email, String firstName, String lastName);
-
     Client create(Client client);
 
     void deleteById(long id);

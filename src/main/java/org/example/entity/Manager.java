@@ -41,6 +41,14 @@ public class Manager {
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
+    public Manager(String firstName, String lastName, int status) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.status = status;
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    }
+
     public List<Product> getProducts() {
         return products;
     }
