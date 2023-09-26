@@ -34,7 +34,7 @@
             <column name="address" type="VARCHAR(255)"/>
             <column name="phone" type="VARCHAR(255)"/>
             <column name="email" type="VARCHAR(255)"/>
-            <column name="status" type="INTEGER"/>
+            <column name="status" type="VARCHAR(255)"/>
             <column name="tax_code" type="VARCHAR(255)"/>
             <column name="created_at" type="TIMESTAMP"/>
             <column name="updated_at" type="TIMESTAMP"/>
@@ -133,4 +133,16 @@
             <column name="created_at" type="TIMESTAMP"/>
         </createTable>
     </changeSet>
+
+    <changeSet id="202309221600" author="KE">
+        <comment>Add table user_data</comment>
+        <createTable tableName="user_data">
+            <column name="login" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="user_data_pkey"/>
+            </column>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="user_role" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

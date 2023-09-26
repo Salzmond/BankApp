@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class AccountDto {
+
     private String iban;
     private ClientDto client;
     private String name;

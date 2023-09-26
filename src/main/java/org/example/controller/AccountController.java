@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.model.dto.AccountBalanceInfoDto;
 import org.example.model.dto.AccountDto;
 import org.example.model.dto.TransactionDto;
@@ -37,6 +38,7 @@ public class AccountController {
                 .map(account -> converter.toDto(account)).collect(Collectors.toList());
     }
 
+    @SecurityRequirement(name = "basicauth")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AccountDto create(@RequestBody AccountDto accountDto) {

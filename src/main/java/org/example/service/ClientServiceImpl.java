@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entity.Client;
+import org.example.entity.UserData;
 import org.example.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,15 +11,20 @@ import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientServiceImpl implements ClientService {
+
+    @Autowired
+    private AuthService authService;
 
     @Autowired
     private ClientRepository clientRepository;
 
     @Override
     public List<Client> getAll() {
+        //    UserData currentUser = authService.getCurrentUser();
         return clientRepository.findAll();
     }
 
@@ -30,10 +36,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client create(Client client) {
-        Client clientEntity = clientRepository.findClientByEmail(client.getEmail());
-        if (clientEntity != null) {
+        Optional<Client> clientEntity = clientRepository.findClientByEmail(client.getEmail());
+        if (clientEntity.isPresent()) {
             throw new EntityExistsException("This client already exists in system");
         }
+
+        client.setEmail(authService.getCurrentUser().getLogin());
         return clientRepository.save(client);
     }
 
@@ -46,13 +54,20 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client update(long id, Client client) {
         Client clientEntity = getById(id);
-        if(client.getAddress() != null) {
+        if (client.getAddress() != null) {
             clientEntity.setAddress(client.getAddress());
         }
-        if(client.getPhone() != null) {
+        if (client.getPhone() != null) {
             clientEntity.setPhone(client.getPhone());
         }
         clientEntity.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
         return clientRepository.save(clientEntity);
+    }
+
+    @Override
+    public Client getCurrent() {
+        UserData currentUser = authService.getCurrentUser();
+        return clientRepository.findClientByEmail(currentUser.getLogin()).
+                orElseThrow(() -> new EntityNotFoundException("Please fill the personal information"));
     }
 }

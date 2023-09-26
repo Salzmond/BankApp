@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entity.Account;
+import org.example.entity.Client;
 import org.example.entity.Transaction;
 import org.example.exception.UnsupportedTransactionException;
 import org.example.model.enums.TransactionType;
@@ -34,6 +35,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private CurrencyApiService currencyApiService;
 
+    @Autowired
+    private AuthService authService;
+
     @Override
     public Transaction getById(long id) {
         return transactionRepository.findById(id)
@@ -53,6 +57,12 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction transferMoneyBetweenAccounts(String ibanFrom, String ibanTo, double amount, String description) {
         Account accountFrom = accountService.getByIban(ibanFrom);
+        Client client = accountFrom.getClient();
+        if (!authService.isAuthorize(client.getEmail())) {
+            log.warn("Does not have right to make transfer from {} by client {} ", ibanFrom, client);
+            throw new UnsupportedTransactionException("HELLO");
+        }
+
         if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(amount)) < 0) {
             throw new UnsupportedTransactionException("You have not enough money on your account");
         }

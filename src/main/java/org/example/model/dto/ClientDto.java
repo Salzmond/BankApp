@@ -1,14 +1,17 @@
 package org.example.model.dto;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.example.model.enums.UserStatus;
 
+import java.sql.Timestamp;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClientDto {
 
     private long id;
     private String managersFirstName;
     private String managersSecondName;
-    private int status;
+    private UserStatus status;
     private String taxCode;
     private String firstName;
     private String lastName;
@@ -19,9 +22,10 @@ public class ClientDto {
     private Timestamp updatedAt;
 
     public ClientDto(long id, String managersFirstName,
-                     String managersSecondName, int status, String taxCode,
+                     String managersSecondName,
+                     UserStatus status, String taxCode,
                      String firstName, String lastName, String email, String address,
-                     String phone) {
+                     String phone, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.managersFirstName = managersFirstName;
         this.managersSecondName = managersSecondName;
@@ -32,8 +36,8 @@ public class ClientDto {
         this.email = email;
         this.address = address;
         this.phone = phone;
-        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
-        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public long getId() {
@@ -60,11 +64,11 @@ public class ClientDto {
         this.managersSecondName = managersSecondName;
     }
 
-    public int getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 

@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import org.example.model.enums.UserStatus;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
@@ -14,13 +16,17 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @ManyToOne
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
     private Manager manager;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Account> accounts = new ArrayList<>();
-    private int status;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
+
     private String taxCode;
 
     @NotBlank(message = "First name ist required")
@@ -43,17 +49,15 @@ public class Client {
         //
     }
 
-    public Client(Manager manager, int status, String taxCode,
-                  String firstName, String lastName, String email,
+    public Client(String taxCode, String firstName, String lastName, String email,
                   String address, String phone) {
-        this.manager = manager;
-        this.status = status;
         this.taxCode = taxCode;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.address = address;
         this.phone = phone;
+        this.status = UserStatus.ACTIVE;
         this.createdAt = Timestamp.valueOf(LocalDateTime.now());
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
@@ -61,6 +65,16 @@ public class Client {
     public Client(String address, String phone) {
         this.address = address;
         this.phone = phone;
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    }
+
+    public Client(String firstName, String lastName, String email, String address, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
@@ -96,20 +110,20 @@ public class Client {
         this.manager = manager;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public String getTaxCode() {
         return taxCode;
     }
 
     public void setTaxCode(String taxCode) {
         this.taxCode = taxCode;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
     public String getFirstName() {
@@ -164,7 +178,7 @@ public class Client {
     public String toString() {
         return "Client{" +
                 "id=" + id +
-                ", manager=" + manager +
+             //   ", manager=" + manager.getFirstName() + " " + manager.getLastName() +
                 ", status=" + status +
                 ", taxCode='" + taxCode + '\'' +
                 ", firstName='" + firstName + '\'' +

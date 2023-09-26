@@ -1,0 +1,30 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog-ext
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="202309221900" author="KE">
+        <insert tableName="user_data">
+            <column name="login" value="clients1@test.com"/>
+            <column name="password" value="$2a$10$zo205i3FA906Qjf54rkUs.Bu/P9jrq2agzYPc9Ff2.x1N5uJnfNDK"/>
+            <column name="user_role" value="USER"/>
+        </insert>
+
+        <insert tableName="user_data">
+            <column name="login" value="clients2@test.com"/>
+            <column name="password" value="$2a$10$7Kc5QDMn9Sjyuj8erJ0WE.qpxV7tiu0NWpLE.PMyYS8Odh/oZANHO"/>
+            <column name="user_role" value="MANAGER"/>
+        </insert>
+
+        <insert tableName="user_data">
+            <column name="login" value="clients5@test.com"/>
+            <column name="password" value="$2a$10$lsyXc1WZnwMY0ez6XxxS7ucq4uzi8CibftqlB6ebPzXOp4jokqZbi"/>
+            <column name="user_role" value="USER"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

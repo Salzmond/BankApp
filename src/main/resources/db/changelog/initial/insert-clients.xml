@@ -14,7 +14,7 @@
             <column name="address" value="10010 New York USA"/>
             <column name="phone" value="+121258969"/>
             <column name="email" value="clients1@test.com"/>
-            <column name="status" valueNumeric="2"/>
+            <column name="status" value="ACTIVE"/>
             <column name="tax_code" value="85"/>
             <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
@@ -30,7 +30,7 @@
             <column name="address" value="89758 Munich DE"/>
             <column name="phone" value="+497895896"/>
             <column name="email" value="clients2@test.com"/>
-            <column name="status" valueNumeric="2"/>
+            <column name="status" value="ACTIVE"/>
             <column name="tax_code" value="85"/>
             <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
@@ -46,7 +46,7 @@
             <column name="address" value="89758 Munich DE"/>
             <column name="phone" value="+8972315"/>
             <column name="email" value="clients5@test.com"/>
-            <column name="status" valueNumeric="2"/>
+            <column name="status" value="ACTIVE"/>
             <column name="tax_code" value="85"/>
             <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
