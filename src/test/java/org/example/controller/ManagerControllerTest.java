@@ -57,7 +57,7 @@ class ManagerControllerTest {
     void deleteById() {
     }
 
-    //Метод преобразования объекта в строку вида json
+   
     private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
