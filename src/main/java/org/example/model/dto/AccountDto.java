@@ -11,7 +11,9 @@ import java.util.Date;
 public class AccountDto {
 
     private String iban;
-    private ClientDto client;
+    private String clientFirstName;
+
+    private String clientLastName;
     private String name;
     private AccountType type;
     private AccountStatus status;
@@ -20,11 +22,12 @@ public class AccountDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public AccountDto(String iban, ClientDto client, String name, AccountType type,
+    public AccountDto(String iban, String clientFirstName, String clientLastName, String name, AccountType type,
                       AccountStatus status, BigDecimal balance,
                       CurrencyCode currencyCode) {
         this.iban = iban;
-        this.client = client;
+        this.clientFirstName = clientFirstName;
+        this.clientLastName = clientLastName;
         this.name = name;
         this.type = type;
         this.status = status;
@@ -33,13 +36,6 @@ public class AccountDto {
         this.createdAt = new Timestamp(new Date().getTime());
         this.updatedAt = new Timestamp(new Date().getTime());
     }
-
-    public AccountDto(String iban, CurrencyCode currencyCode, Timestamp createdAt) {
-        this.iban = iban;
-        this.currencyCode = currencyCode;
-        this.createdAt = createdAt;
-    }
-
     public String getIban() {
         return iban;
     }
@@ -48,12 +44,20 @@ public class AccountDto {
         this.iban = iban;
     }
 
-    public ClientDto getClient() {
-        return client;
+    public String getClientFirstName() {
+        return clientFirstName;
     }
 
-    public void setClient(ClientDto client) {
-        this.client = client;
+    public void setClientFirstName(String clientFirstName) {
+        this.clientFirstName = clientFirstName;
+    }
+
+    public String getClientLastName() {
+        return clientLastName;
+    }
+
+    public void setClientLastName(String clientLastName) {
+        this.clientLastName = clientLastName;
     }
 
     public String getName() {
@@ -107,8 +111,9 @@ public class AccountDto {
     @Override
     public String toString() {
         return "AccountDto{" +
-                "id=" + iban +
-                ", client=" + client +
+                "iban='" + iban + '\'' +
+                ", clientFirstName='" + clientFirstName + '\'' +
+                ", clientLastName='" + clientLastName + '\'' +
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", status=" + status +

@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.model.dto.ClientCreateDto;
 import org.example.model.dto.ClientDto;
 import org.example.model.dto.ClientUpdateDto;
@@ -35,6 +36,7 @@ public class ClientController {
     private ClientCreateDtoConverter converterCreate;
 
 
+    @SecurityRequirement(name = "basicauth")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('MANAGER')")
@@ -43,18 +45,23 @@ public class ClientController {
                 .map(client -> converter.toDto(client)).collect(Collectors.toList());
     }
 
+    @SecurityRequirement(name = "basicauth")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'USER')")
     public ClientDto create(@RequestBody ClientCreateDto client) {
         return converter.toDto(clientService.create(converterCreate.toEntity(client)));
     }
 
-    @PatchMapping("/update/{id}")
+    @SecurityRequirement(name = "basicauth")
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public ClientDto update(@PathVariable("id") long id, @RequestBody ClientUpdateDto client) {
-        return converter.toDto(clientService.update(id, converterUpdate.toEntity(client)));
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'USER')")
+    public ClientDto update(@RequestBody ClientUpdateDto client) {
+        return converter.toDto(clientService.update(converterUpdate.toEntity(client)));
     }
 
+    @SecurityRequirement(name = "basicauth")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('MANAGER')")
@@ -62,14 +69,18 @@ public class ClientController {
         return converter.toDto(clientService.getById(id));
     }
 
+    @SecurityRequirement(name = "basicauth")
     @GetMapping("/current")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyAuthority('USER')")
     public ClientDto getCurrent() {
         return converter.toDto(clientService.getCurrent());
     }
 
+    @SecurityRequirement(name = "basicauth")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyAuthority('MANAGER')")
     public void deleteById(@PathVariable("id") long id) {
         clientService.deleteById(id);
     }

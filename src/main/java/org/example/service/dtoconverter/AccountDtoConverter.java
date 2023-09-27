@@ -12,17 +12,12 @@ public class AccountDtoConverter implements Converter<AccountDto, Account> {
     private ClientDtoConverter clientDtoConverter;
 
     public AccountDto toDto(Account account) {
-        if (account == null) {
-            return null;
-        }
-        return new AccountDto(account.getIban(), clientDtoConverter.toDto(account.getClient()), account.getName(),
-                account.getType(), account.getStatus(), account.getBalance(), account.getCurrencyCode());
+        return new AccountDto(account.getIban(), account.getClient().getFirstName(), account.getClient().getLastName(),
+                account.getName(), account.getType(), account.getStatus(),
+                account.getBalance(), account.getCurrencyCode());
     }
 
     public Account toEntity(AccountDto accountDto) {
-        return new Account(accountDto.getIban(), accountDto.getClient() == null ?
-                clientDtoConverter.toEntity(accountDto.getClient()) : null,
-                accountDto.getName(),
-                accountDto.getType(), accountDto.getStatus(), accountDto.getBalance(), accountDto.getCurrencyCode());
+        return new Account(accountDto.getName(), accountDto.getType(), accountDto.getCurrencyCode());
     }
 }

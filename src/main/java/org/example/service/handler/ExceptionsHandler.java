@@ -1,6 +1,7 @@
 package org.example.service.handler;
 
 import org.example.exception.AccountNotActiveException;
+import org.example.exception.AccountNotFoundException;
 import org.example.exception.UnsupportedTransactionException;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class ExceptionsHandler {
 
     @ExceptionHandler(UnsupportedTransactionException.class)
     public ResponseEntity<String> unsupportedTransactionException(Exception exception, HttpRequest request) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EntityExistsException.class)
@@ -36,5 +37,10 @@ public class ExceptionsHandler {
     @ExceptionHandler(UnsupportedOperationException.class)
     public ResponseEntity<String> unsupportedOperationException(Exception exception, HttpRequest request) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<String> accountNotFoundException(Exception exception, HttpRequest request) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

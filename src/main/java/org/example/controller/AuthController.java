@@ -2,7 +2,6 @@ package org.example.controller;
 
 import org.example.entity.UserData;
 import org.example.model.dto.UserCreateDto;
-import org.example.model.dto.UserDto;
 import org.example.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,5 +19,4 @@ public class AuthController {
     public void createUser(@RequestBody UserCreateDto user) {
         authService.create(new UserData(user.getLogin(), user.getPassword()));
     }
-
 }

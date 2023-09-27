@@ -10,9 +10,9 @@ public interface AccountService {
 
     List<Account> getAll();
 
-    Account getByIban(String iban);
+    List<Account> getAllByCurrentClient();
 
-    List<Account> searchByClient(String firstName, String lastName);
+    Account getByIban(String iban);
 
     Account create(Account account);
 

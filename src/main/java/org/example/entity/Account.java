@@ -68,6 +68,14 @@ public class Account {
         this.currencyCode = currencyCode;
     }
 
+    public Account(String name, AccountType type, CurrencyCode currencyCode) {
+        this.name = name;
+        this.type = type;
+        this.currencyCode = currencyCode;
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    }
+
     public String getIban() {
         return iban;
     }

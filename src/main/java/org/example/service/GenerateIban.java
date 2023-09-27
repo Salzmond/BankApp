@@ -1,30 +1,21 @@
 package org.example.service;
 
-import org.iban4j.CountryCode;
-import org.iban4j.Iban;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class GenerateIban {
-    private final String BANK_CODE = "55555";
+    private final String BANK_CODE = "DE0055555000";
 
-    private String generateAccountNumber(int start, int end) {
-        String numbers = "0123456789";
+    public String generateAccountNumber() {
+        Random random = new Random();
         StringBuilder accountNumber = new StringBuilder();
         for (int i = 0; i < 10; i++) {
-            accountNumber.append(numbers.charAt(ThreadLocalRandom.current().nextInt(start, end)));
+            accountNumber.append(random.nextInt(0,10));
         }
-        return accountNumber.toString();
-    }
-
-    private String generateIban() {
-        String iban = new Iban.Builder()
-                .countryCode(CountryCode.DE)
-                .bankCode(BANK_CODE)
-                .accountNumber(generateAccountNumber(0,10))
-                .build().toString();
-        return iban;
+        String accountIban = BANK_CODE.concat(accountNumber.toString());
+        return accountIban;
     }
 }

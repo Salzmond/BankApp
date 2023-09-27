@@ -14,7 +14,7 @@ public interface ClientService {
 
     void deleteById(long id);
 
-    Client update(long id, Client client);
+    Client update(Client client);
 
     Client getCurrent();
 }
