@@ -37,25 +37,7 @@ class AccountControllerTest {
         Account account = new Account();
         Client client = new Client();
         client.setId(1);
-//
-//        //Говорим сервису возвращать список объектов Client при вызове метода getAll
-//        Mockito.when(clientService.getAll()).thenReturn(List.of(client));
-//        //Конвертируем клиента в dto
-//        Mockito.when(converter.toDto(client)).thenReturn(new ClientDto(client.getId(), client.getFirstName(),
-//                client.getLastName(), null));
-//        //Вызываем метод контроллера по адресу /clients
-//        mockMvc.perform(MockMvcRequestBuilders.get("/clients").contentType(MediaType.APPLICATION_JSON))
-//                //Выводим запросы и ответы в консоль
-//                .andDo(MockMvcResultHandlers.print())
-//                //Ожидаем что такой метод вернет код ответа 200
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                //через метод content() можем получить тело ответа в json
-//                //конвертируем список ожидаемый список в json строку и сравним с тем что
-//                //отдано в теле ответа
-//                //Можно сравнивать по поиску значений отдельных полей в теле ответа
-//                //будет показано в тесте создания клиента
-//                .andExpect(MockMvcResultMatchers.content().json(asJsonString(List.of(new ClientDto(
-//                        client.getId(), client.getFirstName(), client.getLastName(), null)))));
+
     }
 
     @Test
