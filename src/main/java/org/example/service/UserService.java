@@ -9,4 +9,8 @@ public interface UserService {
     UserData create(UserData userData);
 
     Optional<UserData> findByLogin(String login);
+
+    String getCurrentUserLogin();
+
+    boolean isAuthorize(String login);
 }

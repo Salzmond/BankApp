@@ -1,6 +1,7 @@
 package org.example.service.dtoconverter;
 
 import org.example.entity.Manager;
+import org.example.entity.Product;
 import org.example.model.dto.ManagerDto;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,14 @@ public class ManagerDtoConverter implements Converter<ManagerDto, Manager> {
         return new ManagerDto(manager.getId(), manager.getFirstName(),
                 manager.getLastName(), manager.getStatus(),
                 manager.getClients().stream()
-                                .flatMap(client -> Stream.of(client.getFirstName() + " " + client.getLastName())).collect(Collectors.toList()),
+                        .map(client -> client.getFirstName() + " " + client.getLastName())
+                        .collect(Collectors.toList()),
                 manager.getProducts().stream().
-                       map(product -> product.getName()).collect(Collectors.toList()),
+                        map(Product::getName).collect(Collectors.toList()),
                 manager.getCreatedAt(),
                 manager.getUpdatedAt());
+
+
     }
 
     public Manager toEntity(ManagerDto managerDto) {

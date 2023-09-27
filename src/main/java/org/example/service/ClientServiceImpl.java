@@ -1,14 +1,13 @@
 package org.example.service;
 
 import org.example.entity.Client;
-import org.example.entity.UserData;
+
+import org.example.exception.ClientExistsException;
+import org.example.exception.ClientNotFoundException;
 import org.example.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.Optional;
 public class ClientServiceImpl implements ClientService {
 
     @Autowired
-    private AuthService authService;
+    private UserService userService;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -31,18 +30,19 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client getById(long id) {
         return clientRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Client with id %d not found", id)));
+                () -> new ClientNotFoundException(String.format("Client with id %d not found", id)));
     }
 
     @Override
     public Client create(Client client) {
-        Optional<Client> clientEntity = Optional.of(clientRepository.findClientByEmail(client.getEmail()));
+        Optional<Client> clientEntity = clientRepository.findClientByEmail(client.getEmail());
         if (clientEntity.isPresent()) {
-            throw new EntityExistsException("This client already exists in system");
+            throw new ClientExistsException("This client already exists in system");
         }
-        client.setEmail(authService.getCurrentUser().getLogin());
+        client.setEmail(userService.getCurrentUserLogin());
         return clientRepository.save(client);
     }
+
     @Override
     public void deleteById(long id) {
         clientRepository.delete(getById(id));
@@ -50,12 +50,18 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client update(Client client) {
-        Client clientEntity = clientRepository.findClientByEmail(authService.getCurrentUser().getLogin());
+        String login = userService.getCurrentUserLogin();
+        Client clientEntity = clientRepository.findClientByEmail(login)
+                .orElseThrow(() -> new ClientNotFoundException(String.format("Client with login %S not found", login)));
+
         if (client.getAddress() != null) {
             clientEntity.setAddress(client.getAddress());
         }
         if (client.getPhone() != null) {
             clientEntity.setPhone(client.getPhone());
+        }
+        if (client.getTaxCode() != null) {
+            clientEntity.setTaxCode(client.getTaxCode());
         }
         clientEntity.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
         return clientRepository.save(clientEntity);
@@ -63,8 +69,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getCurrent() {
-        UserData currentUser = authService.getCurrentUser();
-        return Optional.of(clientRepository.findClientByEmail(currentUser.getLogin())).
-                orElseThrow(() -> new EntityNotFoundException("Please fill the personal information"));
+        return clientRepository.findClientByEmail(userService.getCurrentUserLogin())
+                .orElseThrow(() -> new ClientNotFoundException("Please fill the personal information"));
     }
 }

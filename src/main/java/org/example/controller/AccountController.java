@@ -59,7 +59,7 @@ public class AccountController {
 
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/{iban}")
-    @ResponseStatus(HttpStatus.OK)
+   // @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('MANAGER')")
     public AccountDto getByIban(@PathVariable("iban") String iban) {
         return converter.toDto(accountService.getByIban(iban));
@@ -90,12 +90,12 @@ public class AccountController {
         accountService.deleteAccountByIban(iban);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ConstraintViolationException.class)
-    public Map<String, String> exceptionHandler(ConstraintViolationException ex) {
-        Map<String, String> map = new HashMap<>();
-        ex.getConstraintViolations().forEach(error ->
-                map.put(error.getPropertyPath().toString(), error.getMessage()));
-        return map;
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(ConstraintViolationException.class)
+//    public Map<String, String> exceptionHandler(ConstraintViolationException ex) {
+//        Map<String, String> map = new HashMap<>();
+//        ex.getConstraintViolations().forEach(error ->
+//                map.put(error.getPropertyPath().toString(), error.getMessage()));
+//        return map;
+//    }
 }

@@ -36,7 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
     private CurrencyApiService currencyApiService;
 
     @Autowired
-    private AuthService authService;
+    private UserService userService;
 
     @Override
     public Transaction getById(long id) {
@@ -58,7 +58,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Transaction transferMoneyBetweenAccounts(String ibanFrom, String ibanTo, double amount, String description) {
         Account accountFrom = accountService.getByIban(ibanFrom);
         Client client = accountFrom.getClient();
-        if (!authService.isAuthorize(client.getEmail())) {
+        if (!userService.isAuthorize(client.getEmail())) {
             log.warn("Does not have right to make transfer from {} by client {} ", ibanFrom, client);
             throw new UnsupportedTransactionException("HELLO");
         }

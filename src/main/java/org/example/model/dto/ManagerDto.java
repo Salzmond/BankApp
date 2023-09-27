@@ -1,6 +1,7 @@
 package org.example.model.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ManagerDto {
@@ -13,8 +14,8 @@ public class ManagerDto {
     private List<String> clientsName;
 
     private List<String> products;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public ManagerDto(long id, String firstName, String lastName, int status) {
         this.id = id;
@@ -31,8 +32,8 @@ public class ManagerDto {
         this.status = status;
         this.clientsName = clientsName;
         this.products = products;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = createdAt.toLocalDateTime();
+        this.updatedAt = updatedAt.toLocalDateTime();
     }
 
     public long getId() {
@@ -83,11 +84,11 @@ public class ManagerDto {
         this.products = products;
     }
 
-    public Timestamp getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public Timestamp getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
