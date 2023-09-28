@@ -43,6 +43,11 @@ public class Transaction {
         this.createdAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
+    public Transaction(long id, Account debitAccount, Account creditAccount, TransactionType transactionType, BigDecimal amount, String description) {
+        this(debitAccount, creditAccount, transactionType, amount, description);
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

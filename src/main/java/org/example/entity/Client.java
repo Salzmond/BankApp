@@ -79,6 +79,17 @@ public class Client {
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
+    public Client(long id, String firstName, String lastName, String email, String address, String phone) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    }
+
     public List<Account> getAccounts() {
         return accounts;
     }
