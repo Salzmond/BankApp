@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -28,18 +29,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> search(String name, CurrencyCode currencyCode) {
-        List<Product> products = productRepository.search(name, currencyCode);
-        if (products.isEmpty()) {
-            throw new EntityNotFoundException("No product found");
-        }
-        return products;
-    }
-
-    @Override
     public Product create(Product product) {
-        Product productEntity = search(product.getName(), product.getCurrencyCode()).get(0);
-        if (productEntity != null) {
+        Optional<Product> productEntity = productRepository.findProductByNameAndCurrencyCode(product.getName(), product.getCurrencyCode());
+        if (productEntity.isPresent()) {
             throw new EntityExistsException("This product already exists");
         }
         return productRepository.save(product);

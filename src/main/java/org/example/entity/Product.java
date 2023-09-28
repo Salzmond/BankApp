@@ -47,6 +47,16 @@ public class Product {
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
+    public Product(long id, String name, ProductStatus status, CurrencyCode currencyCode,
+                   double interestRate, int productLimit) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.currencyCode = currencyCode;
+        this.interestRate = interestRate;
+        this.productLimit = productLimit;
+    }
+
     public long getId() {
         return id;
     }

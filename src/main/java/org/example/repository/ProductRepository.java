@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("SELECT prod FROM Product prod WHERE prod.name = :name AND prod.currencyCode = :currencyCode")
-    List<Product> search(@Param("name") String name, @Param("currencyCode") CurrencyCode currencyCode);
+    Optional<Product> findProductByNameAndCurrencyCode(String name, CurrencyCode currencyCode);
 }

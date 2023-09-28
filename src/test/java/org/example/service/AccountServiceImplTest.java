@@ -1,44 +1,64 @@
 package org.example.service;
 
+import org.example.configuration.TestSecurityConfig;
 import org.example.entity.Account;
+import org.example.exception.AccountExistsException;
 import org.example.model.dto.AccountBalanceInfoDto;
 import org.example.model.enums.CurrencyCode;
 import org.example.repository.AccountRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @ExtendWith(MockitoExtension.class)
+@SpringBootTest(classes = TestSecurityConfig.class)
 class AccountServiceImplTest {
 
     @Mock
     private AccountRepository repository;
 
+    @Mock
+    private ClientServiceImpl clientService;
+
+    @Mock
+    private GenerateIban generateIban;
+
     @InjectMocks
     private AccountServiceImpl accountService;
 
+    private List<Account> accounts;
+
+    @BeforeEach
+    void init() {
+        accounts = Arrays.asList(
+                new Account("DE1234567890", "Test account", BigDecimal.valueOf(1000), CurrencyCode.CHF),
+                new Account("DE987654321", "Test account", BigDecimal.valueOf(1000), CurrencyCode.CHF));
+    }
+
     @Test
     void getAll() {
-        Account accountOne = new Account("DE1234567890", "Test account", BigDecimal.valueOf(1000), CurrencyCode.CHF);
-        Account accountTwo = new Account("DE987654321", "Test account", BigDecimal.valueOf(1000), CurrencyCode.CHF);
-        Mockito.when(accountService.getAll()).thenReturn(List.of(accountOne, accountTwo));
-        Assertions.assertEquals(2, accountService.getAll().size());
+        Mockito.when(repository.findAll()).thenReturn(accounts);
+        assertEquals(2, accountService.getAll().size());
     }
 
     @Test
     void getByIbanWhenAccountExists() {
-        Account account = new Account("DE1234567890", "Test account", BigDecimal.valueOf(1000), CurrencyCode.CHF);
-        Mockito.when(repository.findById(account.getIban())).thenReturn(Optional.of(account));
-        Assertions.assertEquals("DE1234567890", accountService.getByIban(account.getIban()).getIban());
+        Mockito.when(repository.findById(accounts.get(0).getIban())).thenReturn(Optional.ofNullable(accounts.get(0)));
+        assertEquals("DE1234567890", accountService.getByIban(accounts.get(0).getIban()).getIban());
     }
 
     @Test
@@ -49,9 +69,9 @@ class AccountServiceImplTest {
 
     @Test
     void createAccountWhenAccountExists() {
-        Account account = new Account("DE555555555", "Test account", BigDecimal.valueOf(1000), CurrencyCode.CHF);
-        Mockito.when(repository.findById(account.getIban())).thenReturn(Optional.of(account));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> accountService.create(account));
+        Mockito.when(repository.findById(accounts.get(0).getIban())).thenReturn(Optional.ofNullable(accounts.get(0)));
+        Account account = new Account("DE1234567890", "Test account", BigDecimal.valueOf(1000), CurrencyCode.CHF);
+        Assertions.assertThrows(AccountExistsException.class, () -> accountService.create(account));
     }
 
     @Test
@@ -68,11 +88,10 @@ class AccountServiceImplTest {
 
     @Test
     void retrievingAccountBalance() {
-        Account account = new Account("DE1234567890", "Test account", BigDecimal.valueOf(1000), CurrencyCode.CHF);
-        Mockito.when(repository.findById(account.getIban())).thenReturn(Optional.of(account));
-        AccountBalanceInfoDto accountBalanceInfoDto = accountService.retrievingAccountBalance(account.getIban());
-        Assertions.assertEquals(1000, accountBalanceInfoDto.getAmount());
-        Assertions.assertEquals(CurrencyCode.CHF, accountBalanceInfoDto.getCurrency());
+        Mockito.when(repository.findById(accounts.get(0).getIban())).thenReturn(Optional.ofNullable(accounts.get(0)));
+        AccountBalanceInfoDto accountBalanceInfoDto = accountService.retrievingAccountBalance(accounts.get(0).getIban());
+        assertEquals(1000, accountBalanceInfoDto.getAmount());
+        assertEquals(CurrencyCode.CHF, accountBalanceInfoDto.getCurrency());
     }
 
     @Test

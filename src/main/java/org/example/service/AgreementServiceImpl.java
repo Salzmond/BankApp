@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AgreementServiceImpl implements AgreementService {
@@ -28,18 +29,9 @@ public class AgreementServiceImpl implements AgreementService {
     }
 
     @Override
-    public List<Agreement> search(Product product) {
-        List<Agreement> agreements = agreementRepository.search(product);
-        if(agreements.isEmpty()) {
-            throw new EntityNotFoundException("No agreements found");
-        }
-        return agreements;
-    }
-
-    @Override
     public Agreement create(Agreement agreement) {
-        Agreement agreementEntity = search(agreement.getProduct()).get(0);
-        if (agreementEntity != null) {
+        Optional<Agreement> agreementEntity = agreementRepository.searchAgreementByProduct(agreement.getProduct());
+        if (agreementEntity.isPresent()) {
             throw new EntityExistsException("This agreement already exists");
         }
         return agreementRepository.save(agreement);

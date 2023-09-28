@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AgreementRepository extends JpaRepository<Agreement, Long> {
 
-    @Query("SELECT agg FROM Agreement agg WHERE agg.product = :product")
-    List<Agreement> search(@Param("product")Product product);
+   Optional<Agreement> searchAgreementByProduct(Product product);
 }

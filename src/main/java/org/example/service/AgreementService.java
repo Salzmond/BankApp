@@ -11,8 +11,6 @@ public interface AgreementService {
 
     Agreement getById(long id);
 
-    List<Agreement> search(Product product);
-
     Agreement create(Agreement agreement);
 
     void deleteAgreementById(long id);

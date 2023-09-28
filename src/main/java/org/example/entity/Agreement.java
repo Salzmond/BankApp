@@ -39,6 +39,13 @@ public class Agreement {
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
+    public Agreement(long id, double interestRate, int status, double sum) {
+        this.id = id;
+        this.interestRate = interestRate;
+        this.status = status;
+        this.sum = sum;
+    }
+
     public long getId() {
         return id;
     }

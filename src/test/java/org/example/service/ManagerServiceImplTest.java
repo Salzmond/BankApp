@@ -24,34 +24,32 @@ class ManagerServiceImplTest {
     @InjectMocks
     private ManagerServiceImpl managerService;
 
+    private List<Manager> managers;
+
     @BeforeEach
     public void init() {
-//        List<Manager> managers = List.of(
-//                new Manager(1L, "Peter", "Pen",)
-//        );
-//        List<Client> clients = List.of();
+        managers = List.of(
+                new Manager(1L, "Peter", "Pen", 50),
+                new Manager(2L, "Max", "Pen", 55)
+        );
     }
 
     @Test
     void getAll() {
-        Manager managerPeter = new Manager(1L, "Peter", "Pen", 50);
-        Manager managerMax = new Manager(2L, "Max", "Pen", 55);
-        Mockito.when(managerService.getAll()).thenReturn(List.of(managerMax, managerPeter));
+        Mockito.when(repository.findAll()).thenReturn(managers);
         Assertions.assertEquals(2, managerService.getAll().size());
     }
 
     @Test
     void getByIdWhenManagerExists() {
-        Manager managerPeter = new Manager(1L, "Peter", "Pen", 50);
-        Mockito.when(repository.findById(managerPeter.getId())).thenReturn(Optional.of(managerPeter));
-        Manager managerEntity = managerService.getById(managerPeter.getId());
-        Assertions.assertEquals(1, managerEntity.getId());
+        Mockito.when(repository.findById(managers.get(0).getId())).thenReturn(Optional.ofNullable(managers.get(0)));
+        Assertions.assertEquals(1L, managerService.getById(managers.get(0).getId()).getId());
     }
 
     @Test
     void getByIdWhenManagerNotExists() {
-        Mockito.when(repository.findById(2L)).thenThrow(new IllegalArgumentException());
-        Assertions.assertThrows(IllegalArgumentException.class, () -> managerService.getById(2));
+        Mockito.when(repository.findById(3L)).thenThrow(new IllegalArgumentException());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> managerService.getById(3L));
     }
 
     @Test
@@ -67,7 +65,7 @@ class ManagerServiceImplTest {
     void createWhenManagerExists() {
         Manager managerBeforeCreate = new Manager(null, "Peter", "Pen", 50);
         Manager managerEntity = new Manager(1L, managerBeforeCreate.getFirstName(), managerBeforeCreate.getLastName(), managerBeforeCreate.getStatus());
-        Mockito.when(repository.findByFirstNameAndLastName(managerBeforeCreate.getFirstName(), managerBeforeCreate.getLastName())).thenReturn(managerEntity);
+        Mockito.when(repository.findByFirstNameAndLastName(managerBeforeCreate.getFirstName(), managerBeforeCreate.getLastName())).thenReturn(Optional.of(managerEntity));
         Assertions.assertThrows(IllegalArgumentException.class, () -> managerService.create(managerBeforeCreate));
     }
 
