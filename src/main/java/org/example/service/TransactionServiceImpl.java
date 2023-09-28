@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -45,8 +46,11 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> search(double amount) {
-        List<Transaction> transactions = transactionRepository.search((amount - RANGE), (amount + RANGE));
+    public List<Transaction> search(String iban, BigDecimal amount) {
+        List<Transaction> transactionHistory = accountService.transactionHistory(iban);
+        List<Transaction> transactions = transactionHistory.stream().
+                filter(tr -> (tr.getAmount().compareTo(amount.subtract(BigDecimal.valueOf(RANGE))) > 0) &&
+                        (tr.getAmount().compareTo(amount.add(BigDecimal.valueOf(RANGE))) < 0)).collect(Collectors.toList());
         if (transactions.isEmpty()) {
             throw new EntityNotFoundException("No transaction found");
         }
@@ -60,7 +64,7 @@ public class TransactionServiceImpl implements TransactionService {
         Client client = accountFrom.getClient();
         if (!userService.isAuthorize(client.getEmail())) {
             log.warn("Does not have right to make transfer from {} by client {} ", ibanFrom, client);
-            throw new UnsupportedTransactionException("HELLO");
+            throw new UnsupportedTransactionException("Wrong client");
         }
 
         if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(amount)) < 0) {

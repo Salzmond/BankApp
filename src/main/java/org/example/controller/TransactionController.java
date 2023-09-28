@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,11 +25,11 @@ public class TransactionController {
     private TransactionDtoConverter converter;
 
     @SecurityRequirement(name = "basicauth")
-    @GetMapping("/search")
+    @GetMapping("/search/{iban}/{amount}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('MANAGER', 'USER')")
-    public List<TransactionDto> searchByAmount(@PathVariable("amount") double amount) {
-        return transactionService.search(amount)
+    public List<TransactionDto> searchByAmount(@PathVariable("iban") String iban, @PathVariable("amount") BigDecimal amount) {
+        return transactionService.search(iban, amount)
                 .stream().map(transaction -> converter.toDto(transaction)).collect(Collectors.toList());
     }
 

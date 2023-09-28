@@ -70,7 +70,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountBalanceInfoDto retrievingAccountBalance(String iban) {
-        Account account = getByIban(iban);
+        Account account = accountRepository.findByIbanAndClient(iban, clientService.getCurrent())
+                .orElseThrow(() -> new AccountNotFoundException("Account doesn't belong to you"));
         return new AccountBalanceInfoDto(account.getBalance().doubleValue(), account.getCurrencyCode());
     }
 

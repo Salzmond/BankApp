@@ -59,7 +59,7 @@ public class AccountController {
 
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/{iban}")
-   // @ResponseStatus(HttpStatus.OK)
+   @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('MANAGER')")
     public AccountDto getByIban(@PathVariable("iban") String iban) {
         return converter.toDto(accountService.getByIban(iban));
