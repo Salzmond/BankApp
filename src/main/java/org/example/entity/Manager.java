@@ -14,7 +14,6 @@ public class Manager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotBlank(message = "First name ist required")
     private String firstName;
     @NotBlank(message = "Last name is required")
@@ -25,6 +24,7 @@ public class Manager {
     @OneToMany(mappedBy = "manager")
     private List<Product> products = new ArrayList<>();
     private int status;
+    private String email;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
@@ -33,20 +33,23 @@ public class Manager {
     }
 
     public Manager(Long id, String firstName, String lastName, int status) {
+        this(firstName,lastName,status);
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.status = status;
-        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
-        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Manager(String firstName, String lastName, int status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
+        this.email = email(firstName,lastName);
         this.createdAt = Timestamp.valueOf(LocalDateTime.now());
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+
+    }
+    private String email(String firstName, String lastName) {
+        String email = firstName.toLowerCase().concat(".").concat(lastName.toLowerCase())
+                .concat("@mybank.com");
+        return email;
     }
 
     public List<Product> getProducts() {
@@ -79,6 +82,14 @@ public class Manager {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -120,6 +131,7 @@ public class Manager {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", status=" + status +
+                ", email='" + email + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

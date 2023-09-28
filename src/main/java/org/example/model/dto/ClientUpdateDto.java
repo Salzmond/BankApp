@@ -4,6 +4,9 @@ public class ClientUpdateDto {
 
     private String address;
     private String phone;
+
+    private String taxCode;
+
     public String getAddress() {
         return address;
     }
@@ -20,11 +23,20 @@ public class ClientUpdateDto {
         this.phone = phone;
     }
 
+    public String getTaxCode() {
+        return taxCode;
+    }
+
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
+    }
+
     @Override
     public String toString() {
         return "ClientUpdateDto{" +
                 "address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
+                ", taxCode='" + taxCode + '\'' +
                 '}';
     }
 }

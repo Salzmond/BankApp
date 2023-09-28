@@ -13,7 +13,5 @@ public interface ManagerService {
 
     Manager create(Manager manager);
 
-    Manager findManagerByFirstAndLastName(String firstName, String lastName);
-
     void deleteById(long id);
 }

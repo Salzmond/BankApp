@@ -62,9 +62,10 @@ public class Client {
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
-    public Client(String address, String phone) {
+    public Client(String address, String phone, String taxCode) {
         this.address = address;
         this.phone = phone;
+        this.taxCode = taxCode;
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 

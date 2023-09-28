@@ -12,6 +12,7 @@
             <column name="first_name" value="Mike"/>
             <column name="last_name" value="Spikeroog"/>
             <column name="status" valueNumeric="35"/>
+            <column name="email" value="mike.spikeroog@mybank.com"/>
             <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
         </insert>
@@ -23,6 +24,7 @@
             <column name="first_name" value="Oleg"/>
             <column name="last_name" value="Orlov"/>
             <column name="status" valueNumeric="33"/>
+            <column name="email" value="oleg.orlov@mybank.com"/>
             <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
         </insert>

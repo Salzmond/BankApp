@@ -1,6 +1,8 @@
 package org.example.service;
 
 import org.example.entity.UserData;
+import org.example.exception.UserNotFoundException;
+import org.example.model.enums.Role;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,5 +44,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isAuthorize(String login) {
         return getCurrentUserLogin().equals(login);
+    }
+
+    @Override
+    public void updateRole(String login) {
+        UserData user = findByLogin(login).orElseThrow(() ->new UserNotFoundException("This user not found"));
+        user.setUserRole(Role.MANAGER);
+        userRepository.save(user);
     }
 }

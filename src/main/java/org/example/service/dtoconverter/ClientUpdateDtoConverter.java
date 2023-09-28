@@ -9,6 +9,6 @@ public class ClientUpdateDtoConverter {
 
     public Client toEntity(ClientUpdateDto clientUpdateDto) {
         return new Client(clientUpdateDto.getAddress(),
-                clientUpdateDto.getPhone());
+                clientUpdateDto.getPhone(), clientUpdateDto.getTaxCode());
     }
 }

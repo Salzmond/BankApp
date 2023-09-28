@@ -13,7 +13,7 @@ public class ManagerDtoConverter implements Converter<ManagerDto, Manager> {
 
     public ManagerDto toDto(Manager manager) {
         return new ManagerDto(manager.getId(), manager.getFirstName(),
-                manager.getLastName(), manager.getStatus(),
+                manager.getLastName(), manager.getStatus(), manager.getEmail(),
                 manager.getClients().stream()
                         .map(client -> client.getFirstName() + " " + client.getLastName())
                         .collect(Collectors.toList()),

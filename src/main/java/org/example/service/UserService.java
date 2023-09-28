@@ -13,4 +13,6 @@ public interface UserService {
     String getCurrentUserLogin();
 
     boolean isAuthorize(String login);
+
+    void updateRole(String login);
 }

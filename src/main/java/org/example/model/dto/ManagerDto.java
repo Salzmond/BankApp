@@ -10,9 +10,8 @@ public class ManagerDto {
     private String firstName;
     private String lastName;
     private int status;
-
+    private String email;
     private List<String> clientsName;
-
     private List<String> products;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -24,12 +23,13 @@ public class ManagerDto {
         this.status = status;
     }
 
-    public ManagerDto(long id, String firstName, String lastName, int status,
+    public ManagerDto(long id, String firstName, String lastName, int status, String email,
                       List<String> clientsName, List<String> products, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
+        this.email = email;
         this.clientsName = clientsName;
         this.products = products;
         this.createdAt = createdAt.toLocalDateTime();
@@ -66,6 +66,14 @@ public class ManagerDto {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<String> getClientsName() {

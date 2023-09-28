@@ -16,7 +16,7 @@ public class ExceptionsHandler {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = {AccountExistsException.class, ClientExistsException.class})
+    @ExceptionHandler(value = {AccountExistsException.class, ClientExistsException.class, ManagerExistsException.class})
     public ResponseEntity<String>  handleEntityExistsException(Exception exception ,  HttpServletRequest request) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }

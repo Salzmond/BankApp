@@ -1,7 +1,5 @@
 package org.example.model.dto;
 
-import org.example.model.enums.Role;
-
 public class UserCreateDto {
 
     private String login;

@@ -24,7 +24,6 @@ public class UserData {
         this.password = password;
         this.userRole = Role.USER;
     }
-
     public String getLogin() {
         return login;
     }

@@ -1,8 +1,10 @@
 package org.example.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.example.model.dto.ManagerCreateDto;
 import org.example.model.dto.ManagerDto;
 import org.example.service.ManagerService;
+import org.example.service.dtoconverter.ManagerCreateDtoConverter;
 import org.example.service.dtoconverter.ManagerDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,9 @@ public class ManagerController {
     @Autowired
     private ManagerDtoConverter converter;
 
+    @Autowired
+    private ManagerCreateDtoConverter createDtoConverter;
+
     @SecurityRequirement(name = "basicauth")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -38,8 +43,8 @@ public class ManagerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyAuthority('MANAGER')")
-    public ManagerDto create(@RequestBody ManagerDto managerDto) {
-        return converter.toDto(managerService.create(converter.toEntity(managerDto)));
+    public ManagerDto create(@RequestBody ManagerCreateDto managerDto) {
+        return converter.toDto(managerService.create(createDtoConverter.toEntity(managerDto)));
     }
 
     @SecurityRequirement(name = "basicauth")
