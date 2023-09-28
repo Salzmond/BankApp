@@ -21,17 +21,17 @@ public class ExceptionsHandler {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(AccountNotActiveException.class)
+    @ExceptionHandler(value = AccountNotActiveException.class)
     public ResponseEntity<String>  handleAccountNotActiveException(Exception exception,  HttpServletRequest request) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler(UnsupportedTransactionException.class)
+    @ExceptionHandler(value = UnsupportedTransactionException.class)
     public ResponseEntity<String>  handleUnsupportedTransactionException(Exception exception,  HttpServletRequest request) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UnsupportedOperationException.class)
+    @ExceptionHandler(value = UnsupportedOperationException.class)
     public ResponseEntity<String> handleUnsupportedOperationException(Exception exception, HttpServletRequest request) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
     }

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -42,7 +41,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction getById(long id) {
         return transactionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Transaction with id %d not found", id)));
+                .orElseThrow(() -> new UnsupportedTransactionException(String.format("Transaction with id %d not found", id)));
     }
 
     @Override
@@ -52,7 +51,7 @@ public class TransactionServiceImpl implements TransactionService {
                 filter(tr -> (tr.getAmount().compareTo(amount.subtract(BigDecimal.valueOf(RANGE))) > 0) &&
                         (tr.getAmount().compareTo(amount.add(BigDecimal.valueOf(RANGE))) < 0)).collect(Collectors.toList());
         if (transactions.isEmpty()) {
-            throw new EntityNotFoundException("No transaction found");
+            throw new UnsupportedTransactionException("No transaction found");
         }
         return transactions;
     }
