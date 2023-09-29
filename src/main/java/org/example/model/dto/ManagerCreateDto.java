@@ -1,15 +1,22 @@
 package org.example.model.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class ManagerCreateDto {
 
+    @Schema(description = "Managers first name", defaultValue = "Oleg")
     private String firstName;
+    @Schema(description = "Managers last name", defaultValue = "Orlov")
     private String lastName;
-
+    @Hidden
     private int status;
+    @Hidden
     private Timestamp createdAt;
+    @Hidden
     private Timestamp updatedAt;
 
     public ManagerCreateDto(String firstName, String lastName) {

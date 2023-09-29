@@ -85,17 +85,17 @@ class ClientServiceImplTest {
         Mockito.when(userService.getCurrentUserLogin()).thenReturn(login);
         Client clientBeforeUpdate = new Client(1L, "Oleg", "Rylov", "clients2@test.com", "89758 Munich DE", "+497895896");
         Mockito.when(clientRepository.findClientByEmail(login)).thenReturn(Optional.of(clientBeforeUpdate));
-        Client clientUpdate = new Client("10010 New York USA", "+121258969","12345");
+        Client clientUpdate = new Client("10010 New York USA", "+121258969", "12345");
         Client clientWithUpdate = new Client(1L, "Oleg", "Rylov", "clients2@test.com", "10010 New York USA", "+121258969");
 
         Mockito.when(clientRepository.save(Mockito.any())).thenReturn(clientWithUpdate);
-        assertEquals(clientUpdate.getAddress(),clientService.update(clientUpdate).getAddress());
+        assertEquals(clientUpdate.getAddress(), clientService.update(clientUpdate).getAddress());
     }
 
     @Test
     void updateWhenClientNotExists() {
         String login = "clients2@test.com";
-        Client clientUpdate = new Client("10010 New York USA", "+121258969","12345");
+        Client clientUpdate = new Client("10010 New York USA", "+121258969", "12345");
         Mockito.when(userService.getCurrentUserLogin()).thenReturn(login);
         Mockito.when(clientRepository.findClientByEmail(login)).thenReturn(Optional.ofNullable(null));
         assertThrows(ClientNotFoundException.class, () -> clientService.update(clientUpdate));

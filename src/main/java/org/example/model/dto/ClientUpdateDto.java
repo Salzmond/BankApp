@@ -1,10 +1,14 @@
 package org.example.model.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class ClientUpdateDto {
 
+    @Schema(description = "Clients address", defaultValue = "USA NY 8974 1St.")
     private String address;
+    @Schema(description = "Clients phone", defaultValue = "+14569886034225")
     private String phone;
-
+    @Schema(description = "Clients tax code", defaultValue = "78922ER")
     private String taxCode;
 
     public String getAddress() {

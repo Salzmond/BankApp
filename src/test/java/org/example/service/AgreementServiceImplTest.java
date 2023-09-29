@@ -53,6 +53,8 @@ class AgreementServiceImplTest {
 
     @Test
     void deleteAgreementById() {
-
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.ofNullable(agreements.get(0)));
+        agreementService.deleteAgreementById(agreements.get(0).getId());
+        Mockito.verify(repository).delete(agreements.get(0));
     }
 }

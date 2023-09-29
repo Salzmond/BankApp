@@ -1,6 +1,8 @@
 package org.example.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.model.dto.TransactionCreateDto;
 import org.example.model.dto.TransactionDto;
 import org.example.service.TransactionService;
@@ -14,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "Transactions controller", description = "Transactions management")
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -24,6 +27,8 @@ public class TransactionController {
     @Autowired
     private TransactionDtoConverter converter;
 
+    @Operation(summary = "Search transaction by amount",
+            description = "Allow to find a transaction by amount in the range of 50 monetary units")
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/search/{iban}/{amount}")
     @ResponseStatus(HttpStatus.OK)
@@ -33,6 +38,7 @@ public class TransactionController {
                 .stream().map(transaction -> converter.toDto(transaction)).collect(Collectors.toList());
     }
 
+    @Operation(summary = "Money transfer", description = "Allow to transfer money between accounts in the system")
     @SecurityRequirement(name = "basicauth")
     @PostMapping("/transfer")
     @ResponseStatus(HttpStatus.CREATED)

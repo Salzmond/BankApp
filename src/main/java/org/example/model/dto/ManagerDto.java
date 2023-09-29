@@ -1,19 +1,31 @@
 package org.example.model.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class ManagerDto {
 
+    @Hidden
     private long id;
+    @Schema(description = "Managers first name", defaultValue = "Oleg")
     private String firstName;
+    @Schema(description = "Managers last name", defaultValue = "Orlov")
     private String lastName;
+    @Hidden
     private int status;
+    @Schema(description = "Managers email", defaultValue = "oleg.orlov@mybank.com")
     private String email;
+    @Hidden
     private List<String> clientsName;
+    @Hidden
     private List<String> products;
+    @Hidden
     private LocalDateTime createdAt;
+    @Hidden
     private LocalDateTime updatedAt;
 
     public ManagerDto(long id, String firstName, String lastName, int status) {

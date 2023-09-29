@@ -1,5 +1,7 @@
 package org.example.model.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.example.model.enums.AccountStatus;
 import org.example.model.enums.AccountType;
 import org.example.model.enums.CurrencyCode;
@@ -10,16 +12,25 @@ import java.util.Date;
 
 public class AccountDto {
 
+    @Hidden
     private String iban;
+    @Schema(description = "First name of client", defaultValue = "Axel")
     private String clientFirstName;
-
+    @Schema(description = "Last name of client", defaultValue = "Petrov")
     private String clientLastName;
+    @Schema(description = "Name of account", defaultValue = "My account")
     private String name;
+    @Schema(description = "Type of account - debit or credit", defaultValue = "DEBIT")
     private AccountType type;
+    @Schema(description = "Status of account - active or blocked", defaultValue = "ACTIVE")
     private AccountStatus status;
+    @Hidden
     private BigDecimal balance;
+    @Schema(description = "Account currency", defaultValue = "EUR")
     private CurrencyCode currencyCode;
+    @Hidden
     private Timestamp createdAt;
+    @Hidden
     private Timestamp updatedAt;
 
     public AccountDto(String iban, String clientFirstName, String clientLastName, String name, AccountType type,
@@ -36,6 +47,7 @@ public class AccountDto {
         this.createdAt = new Timestamp(new Date().getTime());
         this.updatedAt = new Timestamp(new Date().getTime());
     }
+
     public String getIban() {
         return iban;
     }

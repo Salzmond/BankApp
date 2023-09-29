@@ -1,6 +1,8 @@
 package org.example.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.model.dto.ClientCreateDto;
 import org.example.model.dto.ClientDto;
 import org.example.model.dto.ClientUpdateDto;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Tag(name = "Client controller", description = "Client management")
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
@@ -35,7 +38,7 @@ public class ClientController {
     @Autowired
     private ClientCreateDtoConverter converterCreate;
 
-
+    @Operation(summary = "List of all clients", description = "Obtaining all clients in the system")
     @SecurityRequirement(name = "basicauth")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -45,6 +48,7 @@ public class ClientController {
                 .map(client -> converter.toDto(client)).collect(Collectors.toList());
     }
 
+    @Operation(summary = "Create client", description = "Allow to create a new one in the system")
     @SecurityRequirement(name = "basicauth")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,6 +57,7 @@ public class ClientController {
         return converter.toDto(clientService.create(converterCreate.toEntity(client)));
     }
 
+    @Operation(summary = "Update client", description = "Allow to update some fields in client info like address, phone or tax code")
     @SecurityRequirement(name = "basicauth")
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
@@ -61,6 +66,7 @@ public class ClientController {
         return converter.toDto(clientService.update(converterUpdate.toEntity(client)));
     }
 
+    @Operation(summary = "Find client by ID", description = "Allow to find a client by ID ")
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -69,6 +75,7 @@ public class ClientController {
         return converter.toDto(clientService.getById(id));
     }
 
+    @Operation(summary = "Get current client", description = "Allow to get current logged client in the system")
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/current")
     @ResponseStatus(HttpStatus.OK)
@@ -77,6 +84,7 @@ public class ClientController {
         return converter.toDto(clientService.getCurrent());
     }
 
+    @Operation(summary = "Delete client by ID", description = "Allow to delete an existing client in the system by ID")
     @SecurityRequirement(name = "basicauth")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

@@ -1,14 +1,21 @@
 package org.example.model.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class ClientCreateDto {
 
+    @Schema(description = "Clients first name", defaultValue = "Nick")
     private String firstName;
+    @Schema(description = "Clients last name", defaultValue = "Samovarov")
     private String lastName;
+    @Schema(description = "Clients email", defaultValue = "nick@thebest.com")
     private String email;
+    @Schema(description = "Clients address", defaultValue = "USA NY 8974 1St.")
     private String address;
+    @Schema(description = "Clients phone", defaultValue = "+14569886034225")
     private String phone;
 
     private Timestamp createdAt;

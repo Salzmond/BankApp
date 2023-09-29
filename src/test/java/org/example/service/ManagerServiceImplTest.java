@@ -1,7 +1,8 @@
 package org.example.service;
 
-import org.example.entity.Client;
 import org.example.entity.Manager;
+import org.example.exception.ManagerExistsException;
+import org.example.exception.ManagerNotFoundException;
 import org.example.repository.ManagerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,20 +43,21 @@ class ManagerServiceImplTest {
 
     @Test
     void getByIdWhenManagerExists() {
-        Mockito.when(repository.findById(managers.get(0).getId())).thenReturn(Optional.ofNullable(managers.get(0)));
-        Assertions.assertEquals(1L, managerService.getById(managers.get(0).getId()).getId());
+        Manager manager = managers.get(0);
+        Mockito.when(repository.findById(manager.getId())).thenReturn(Optional.ofNullable(manager));
+        Assertions.assertEquals(1L, managerService.getById(manager.getId()).getId());
     }
 
     @Test
     void getByIdWhenManagerNotExists() {
-        Mockito.when(repository.findById(3L)).thenThrow(new IllegalArgumentException());
-        Assertions.assertThrows(IllegalArgumentException.class, () -> managerService.getById(3L));
+        Mockito.when(repository.findById(3L)).thenReturn(Optional.ofNullable(null));
+        Assertions.assertThrows(ManagerNotFoundException.class, () -> managerService.getById(3L));
     }
 
     @Test
     void createWhenManagerNotExists() {
         Manager managerBeforeCreate = new Manager(null, "Peter", "Pen", 50);
-        Mockito.when(repository.findByFirstNameAndLastName(managerBeforeCreate.getFirstName(), managerBeforeCreate.getLastName())).thenReturn(null);
+        Mockito.when(repository.findByFirstNameAndLastName(managerBeforeCreate.getFirstName(), managerBeforeCreate.getLastName())).thenReturn(Optional.ofNullable(null));
         Manager managerAfterCreate = new Manager(1L, managerBeforeCreate.getFirstName(), managerBeforeCreate.getLastName(), managerBeforeCreate.getStatus());
         Mockito.when(repository.save(managerBeforeCreate)).thenReturn(managerAfterCreate);
         Assertions.assertEquals(1L, managerService.create(managerBeforeCreate).getId());
@@ -66,12 +68,12 @@ class ManagerServiceImplTest {
         Manager managerBeforeCreate = new Manager(null, "Peter", "Pen", 50);
         Manager managerEntity = new Manager(1L, managerBeforeCreate.getFirstName(), managerBeforeCreate.getLastName(), managerBeforeCreate.getStatus());
         Mockito.when(repository.findByFirstNameAndLastName(managerBeforeCreate.getFirstName(), managerBeforeCreate.getLastName())).thenReturn(Optional.of(managerEntity));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> managerService.create(managerBeforeCreate));
+        Assertions.assertThrows(ManagerExistsException.class, () -> managerService.create(managerBeforeCreate));
     }
 
     @Test
     void deleteByIdWhenIdNotExists() {
         Mockito.when(repository.findById(2L)).thenReturn(Optional.ofNullable(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> managerService.deleteById(2L));
+        Assertions.assertThrows(ManagerNotFoundException.class, () -> managerService.deleteById(2L));
     }
 }

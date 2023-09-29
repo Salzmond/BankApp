@@ -1,5 +1,7 @@
 package org.example.model.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.example.entity.Account;
 import org.example.entity.Product;
 
@@ -8,13 +10,21 @@ import java.util.Date;
 
 public class AgreementDto {
 
+    @Hidden
     private long id;
+    @Hidden
     private AccountDto account;
+    @Hidden
     private ProductDto product;
+    @Schema(description = "Interest rate", defaultValue = "2.0")
     private double interestRate;
+    @Hidden
     private int status;
+    @Hidden
     private double sum;
+    @Hidden
     private Timestamp createdAt;
+    @Hidden
     private Timestamp updatedAt;
 
     public AgreementDto(AccountDto account, ProductDto product, double interestRate,

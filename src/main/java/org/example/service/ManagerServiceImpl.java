@@ -1,13 +1,11 @@
 package org.example.service;
 
 import org.example.entity.Manager;
-import org.example.entity.UserData;
 import org.example.exception.ManagerExistsException;
+import org.example.exception.ManagerNotFoundException;
 import org.example.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +15,6 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     private ManagerRepository managerRepository;
 
-    @Autowired
-    private UserService userService;
-
     @Override
     public List<Manager> getAll() {
         return managerRepository.findAll();
@@ -28,7 +23,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Manager getById(long id) {
         return managerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Manager with id %d not exists", id)));
+                .orElseThrow(() -> new ManagerNotFoundException(String.format("Manager with id %d not exists", id)));
     }
 
     @Override

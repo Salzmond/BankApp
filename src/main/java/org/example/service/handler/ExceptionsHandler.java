@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ExceptionsHandler {
 
-    @ExceptionHandler(value = {AccountNotFoundException.class, ClientNotFoundException.class})
+    @ExceptionHandler(value = {AccountNotFoundException.class, ClientNotFoundException.class, ManagerNotFoundException.class})
     public ResponseEntity<String> handleNotFoundException(Exception exception, HttpServletRequest request) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }

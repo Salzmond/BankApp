@@ -1,6 +1,8 @@
 package org.example.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.model.dto.ManagerCreateDto;
 import org.example.model.dto.ManagerDto;
 import org.example.service.ManagerService;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Tag(name = "Manager controller", description = "Management of bank manager")
 @RestController
 @RequestMapping("/managers")
 public class ManagerController {
@@ -30,6 +33,7 @@ public class ManagerController {
     @Autowired
     private ManagerCreateDtoConverter createDtoConverter;
 
+    @Operation(summary = "List of all managers", description = "Obtaining all managers in the system")
     @SecurityRequirement(name = "basicauth")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -39,6 +43,7 @@ public class ManagerController {
                 .map(manager -> converter.toDto(manager)).collect(Collectors.toList());
     }
 
+    @Operation(summary = "Create manager", description = "Allow to create a new one in the system")
     @SecurityRequirement(name = "basicauth")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,14 +52,16 @@ public class ManagerController {
         return converter.toDto(managerService.create(createDtoConverter.toEntity(managerDto)));
     }
 
+    @Operation(summary = "Find manager by ID", description = "Allow to find a manager by ID ")
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('MANAGER')")
     public ManagerDto getById(@PathVariable("id") long id) {
         return converter.toDto((managerService.getById(id)));
     }
 
+    @Operation(summary = "Delete manager by ID", description = "Allow to delete an existing manager in the system by ID")
     @SecurityRequirement(name = "basicauth")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

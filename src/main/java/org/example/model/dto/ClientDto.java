@@ -1,6 +1,8 @@
 package org.example.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.example.model.enums.UserStatus;
 
 import java.sql.Timestamp;
@@ -8,17 +10,29 @@ import java.sql.Timestamp;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClientDto {
 
+    @Hidden
     private long id;
+    @Hidden
     private String managersFirstName;
+    @Hidden
     private String managersSecondName;
+    @Hidden
     private UserStatus status;
+    @Schema(description = "Clients tax code", defaultValue = "78922ER")
     private String taxCode;
+    @Schema(description = "Clients first name", defaultValue = "Nick")
     private String firstName;
+    @Schema(description = "Clients last name", defaultValue = "Samovarov")
     private String lastName;
+    @Schema(description = "Clients email", defaultValue = "nick@thebest.com")
     private String email;
+    @Schema(description = "Clients address", defaultValue = "USA NY 8974 1St.")
     private String address;
+    @Schema(description = "Clients phone", defaultValue = "+14569886034225")
     private String phone;
+    @Hidden
     private Timestamp createdAt;
+    @Hidden
     private Timestamp updatedAt;
 
     public ClientDto(long id, String managersFirstName,
