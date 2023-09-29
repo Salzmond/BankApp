@@ -1,5 +1,6 @@
 package org.example.model.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.example.model.enums.TransactionType;
 
 import java.math.BigDecimal;
@@ -25,6 +26,17 @@ public class TransactionDto {
         this.amount = amount;
         this.description = description;
         this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+    }
+
+    public TransactionDto(long id, String debitAccountIban, String creditAccountIban,
+                          TransactionType transactionType, BigDecimal amount, String description, Timestamp createdAt) {
+        this.id = id;
+        this.debitAccountIban = debitAccountIban;
+        this.creditAccountIban = creditAccountIban;
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.description = description;
+        this.createdAt = createdAt;
     }
 
     public long getId() {

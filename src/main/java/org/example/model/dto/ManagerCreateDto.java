@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 
 public class ManagerCreateDto {
 
-    @Schema(description = "Managers first name", defaultValue = "Oleg")
+    @Schema(description = "Managers first name", defaultValue = "Kirill")
     private String firstName;
-    @Schema(description = "Managers last name", defaultValue = "Orlov")
+    @Schema(description = "Managers last name", defaultValue = "Aksenov")
     private String lastName;
-    @Hidden
+    @Schema(description = "Managers status", defaultValue = "85")
     private int status;
     @Hidden
     private Timestamp createdAt;
