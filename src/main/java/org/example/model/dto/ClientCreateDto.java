@@ -1,5 +1,6 @@
 package org.example.model.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.sql.Timestamp;
@@ -17,8 +18,9 @@ public class ClientCreateDto {
     private String address;
     @Schema(description = "Clients phone", defaultValue = "+14569886034225")
     private String phone;
-
+    @Hidden
     private Timestamp createdAt;
+    @Hidden
     private Timestamp updatedAt;
 
     public ClientCreateDto(String firstName, String lastName, String email, String address, String phone) {

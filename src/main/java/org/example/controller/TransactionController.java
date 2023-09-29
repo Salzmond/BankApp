@@ -32,7 +32,7 @@ public class TransactionController {
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/search/{iban}/{amount}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyAuthority('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'CLIENT')")
     public List<TransactionDto> searchByAmount(@PathVariable("iban") String iban, @PathVariable("amount") BigDecimal amount) {
         return transactionService.search(iban, amount)
                 .stream().map(transaction -> converter.toDto(transaction)).collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class TransactionController {
     @SecurityRequirement(name = "basicauth")
     @PostMapping("/transfer")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('CLIENT')")
     public TransactionDto transferMoney(@RequestBody TransactionCreateDto transactionCreate) {
         return converter.toDto(transactionService.transferMoneyBetweenAccounts(transactionCreate.getIbanFrom(),
                 transactionCreate.getIbanTo(), transactionCreate.getAmount(), transactionCreate.getDescription()));

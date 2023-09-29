@@ -52,7 +52,7 @@ public class ClientController {
     @SecurityRequirement(name = "basicauth")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyAuthority('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyAuthority('USER')")
     public ClientDto create(@RequestBody ClientCreateDto client) {
         return converter.toDto(clientService.create(converterCreate.toEntity(client)));
     }
@@ -61,7 +61,7 @@ public class ClientController {
     @SecurityRequirement(name = "basicauth")
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyAuthority('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'CLIENT')")
     public ClientDto update(@RequestBody ClientUpdateDto client) {
         return converter.toDto(clientService.update(converterUpdate.toEntity(client)));
     }
@@ -79,7 +79,7 @@ public class ClientController {
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/current")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('CLIENT')")
     public ClientDto getCurrent() {
         return converter.toDto(clientService.getCurrent());
     }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class ManagerCreateDtoConverter {
 
     public Manager toEntity(ManagerCreateDto managerCreateDto) {
-        return new Manager(managerCreateDto.getFirstName(),managerCreateDto.getLastName(),
+        return new Manager(managerCreateDto.getFirstName(), managerCreateDto.getLastName(),
                 managerCreateDto.getStatus());
     }
 }

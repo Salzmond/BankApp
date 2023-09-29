@@ -10,7 +10,7 @@
         <insert tableName="user_data">
             <column name="login" value="clients1@test.com"/>
             <column name="password" value="$2a$10$zo205i3FA906Qjf54rkUs.Bu/P9jrq2agzYPc9Ff2.x1N5uJnfNDK"/>
-            <column name="user_role" value="USER"/>
+            <column name="user_role" value="CLIENT"/>
         </insert>
 
         <insert tableName="user_data">

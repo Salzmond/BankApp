@@ -33,7 +33,7 @@ public class Manager {
     }
 
     public Manager(Long id, String firstName, String lastName, int status) {
-        this(firstName,lastName,status);
+        this(firstName, lastName, status);
         this.id = id;
     }
 
@@ -41,11 +41,12 @@ public class Manager {
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
-        this.email = email(firstName,lastName);
+        this.email = email(firstName, lastName);
         this.createdAt = Timestamp.valueOf(LocalDateTime.now());
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
 
     }
+
     private String email(String firstName, String lastName) {
         String email = firstName.toLowerCase().concat(".").concat(lastName.toLowerCase())
                 .concat("@mybank.com");

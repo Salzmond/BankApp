@@ -5,12 +5,17 @@ import org.example.exception.UserNotFoundException;
 import org.example.model.enums.Role;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,9 +52,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateRole(String login) {
-        UserData user = findByLogin(login).orElseThrow(() ->new UserNotFoundException("This user not found"));
+    public void updateRoleToManager(String login) {
+        UserData user = findByLogin(login).orElseThrow(() -> new UserNotFoundException("This user not found"));
         user.setUserRole(Role.MANAGER);
+        userRepository.save(user);
+    }
+
+    public void removeRole(String role){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        List<GrantedAuthority> updatedAuthorities =
+                auth.getAuthorities().stream()
+                        .filter(r -> !role.equals(r.getAuthority()))
+                        .collect(Collectors.toList());
+
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(
+                auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+    }
+
+    @Override
+    public void updateRoleToClient(String login) {
+        UserData user = findByLogin(login).orElseThrow(() -> new UserNotFoundException("This user not found"));
+        user.setUserRole(Role.CLIENT);
+        removeRole("USER");
         userRepository.save(user);
     }
 }

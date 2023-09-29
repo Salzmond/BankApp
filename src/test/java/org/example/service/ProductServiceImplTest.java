@@ -1,6 +1,5 @@
 package org.example.service;
 
-import org.example.entity.Agreement;
 import org.example.entity.Product;
 import org.example.model.enums.CurrencyCode;
 import org.example.model.enums.ProductStatus;
@@ -17,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {

@@ -40,6 +40,7 @@ public class ClientServiceImpl implements ClientService {
             throw new ClientExistsException("This client already exists in system");
         }
         client.setEmail(userService.getCurrentUserLogin());
+        userService.updateRoleToClient(userService.getCurrentUserLogin());
         return clientRepository.save(client);
     }
 

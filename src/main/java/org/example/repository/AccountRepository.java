@@ -5,15 +5,13 @@ import org.example.entity.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
-
-    @Query("SELECT acc FROM Account acc WHERE acc.client.firstName = :firstname AND acc.client.lastName = :lastName")
-    List<Account> search(@Param("firstname") String firstName, @Param("lastName") String lastName);
-
     List<Account> findAllByClient(Client client);
 
     Optional<Account> findByIbanAndClient(String s, Client client);

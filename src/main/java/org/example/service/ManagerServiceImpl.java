@@ -6,6 +6,7 @@ import org.example.exception.ManagerNotFoundException;
 import org.example.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,7 @@ public class ManagerServiceImpl implements ManagerService {
         }
         return managerRepository.save(manager);
     }
+
     @Override
     public void deleteById(long id) {
         managerRepository.delete(getById(id));

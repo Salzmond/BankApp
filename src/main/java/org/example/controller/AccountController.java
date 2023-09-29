@@ -48,7 +48,7 @@ public class AccountController {
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/current")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('CLIENT')")
     List<AccountDto> getAllByCurrentClient() {
         return accountService.getAllByCurrentClient().stream()
                 .map(account -> converter.toDto(account)).collect(Collectors.toList());
@@ -58,7 +58,7 @@ public class AccountController {
     @SecurityRequirement(name = "basicauth")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('CLIENT')")
     public AccountDto create(@RequestBody AccountDto accountDto) {
         return converter.toDto(accountService.create(converter.toEntity(accountDto)));
     }
@@ -76,7 +76,7 @@ public class AccountController {
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/balance/{iban}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('CLIENT')")
     public AccountBalanceInfoDto retrievingAccountBalance(@PathVariable("iban") String iban) {
         return accountService.retrievingAccountBalance(iban);
     }
@@ -85,7 +85,7 @@ public class AccountController {
     @SecurityRequirement(name = "basicauth")
     @GetMapping("/history/{iban}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('CLIENT')")
     public List<TransactionDto> getTransactionsHistoryOfAccount(@PathVariable("iban") String iban) {
         return accountService.transactionHistory(iban).stream()
                 .map(transactionConverter::toDto).collect(Collectors.toList());

@@ -2,7 +2,6 @@ package org.example.service.dtoconverter;
 
 import org.example.entity.Account;
 import org.example.model.dto.AccountDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +11,7 @@ public class AccountDtoConverter implements Converter<AccountDto, Account> {
         return new AccountDto(account.getIban(), account.getClient().getFirstName(), account.getClient().getLastName(),
                 account.getName(), account.getType(), account.getStatus(),
                 account.getBalance(), account.getCurrencyCode(),
-                account.getCreatedAt(),account.getUpdatedAt());
+                account.getCreatedAt(), account.getUpdatedAt());
     }
 
     public Account toEntity(AccountDto accountDto) {

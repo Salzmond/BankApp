@@ -1,5 +1,7 @@
 package org.example.model.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.example.entity.Manager;
 import org.example.model.enums.CurrencyCode;
 import org.example.model.enums.ProductStatus;
@@ -10,10 +12,11 @@ import java.util.Date;
 
 public class ProductDto {
 
-
+    @Hidden
     private long id;
+    @Schema(description = "Managers first name", defaultValue = "Oleg")
     private String managerFirstName;
-
+    @Schema(description = "Managers last name", defaultValue = "Orlov")
     private String managerLastName;
     private String name;
     private ProductStatus status;

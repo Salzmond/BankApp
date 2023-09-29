@@ -21,7 +21,7 @@ public class Account {
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "account")
     private Agreement agreement;
 
     @OneToMany(mappedBy = "debitAccount", cascade = CascadeType.ALL)

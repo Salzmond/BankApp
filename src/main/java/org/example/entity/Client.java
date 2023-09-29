@@ -190,7 +190,6 @@ public class Client {
     public String toString() {
         return "Client{" +
                 "id=" + id +
-             //   ", manager=" + manager.getFirstName() + " " + manager.getLastName() +
                 ", status=" + status +
                 ", taxCode='" + taxCode + '\'' +
                 ", firstName='" + firstName + '\'' +

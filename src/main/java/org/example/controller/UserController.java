@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.entity.UserData;
 import org.example.model.dto.UserCreateDto;
@@ -29,8 +30,9 @@ public class UserController {
     @Operation(summary = "Update user role", description = "Allow to update user role from USER to MANAGER")
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
+    @SecurityRequirement(name = "basicauth")
     @PreAuthorize("hasAnyAuthority('MANAGER')")
     public void updateRole(@RequestBody UserUpdateDto userUpdateDto) {
-        userService.updateRole(userUpdateDto.getLogin());
+        userService.updateRoleToManager(userUpdateDto.getLogin());
     }
 }

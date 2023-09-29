@@ -9,9 +9,11 @@ public class CurrencyResponse {
     public CurrencyResponse() {
         //
     }
+
     public Map<String, Double> getRates() {
         return rates;
     }
+
     @Override
     public String toString() {
         return "CurrencyResponse{" +

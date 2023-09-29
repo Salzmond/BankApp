@@ -1,7 +1,6 @@
 package org.example.service;
 
 import org.example.entity.Agreement;
-import org.example.entity.Product;
 import org.example.repository.AgreementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

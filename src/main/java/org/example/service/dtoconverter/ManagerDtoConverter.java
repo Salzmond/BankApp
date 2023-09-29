@@ -6,7 +6,6 @@ import org.example.model.dto.ManagerDto;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class ManagerDtoConverter implements Converter<ManagerDto, Manager> {
@@ -21,8 +20,6 @@ public class ManagerDtoConverter implements Converter<ManagerDto, Manager> {
                         map(Product::getName).collect(Collectors.toList()),
                 manager.getCreatedAt(),
                 manager.getUpdatedAt());
-
-
     }
 
     public Manager toEntity(ManagerDto managerDto) {

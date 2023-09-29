@@ -14,5 +14,7 @@ public interface UserService {
 
     boolean isAuthorize(String login);
 
-    void updateRole(String login);
+    void updateRoleToManager(String login);
+
+    void updateRoleToClient(String login);
 }

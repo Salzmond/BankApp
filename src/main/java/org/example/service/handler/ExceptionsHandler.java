@@ -17,17 +17,17 @@ public class ExceptionsHandler {
     }
 
     @ExceptionHandler(value = {AccountExistsException.class, ClientExistsException.class, ManagerExistsException.class})
-    public ResponseEntity<String>  handleEntityExistsException(Exception exception ,  HttpServletRequest request) {
+    public ResponseEntity<String> handleEntityExistsException(Exception exception, HttpServletRequest request) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = AccountNotActiveException.class)
-    public ResponseEntity<String>  handleAccountNotActiveException(Exception exception,  HttpServletRequest request) {
+    public ResponseEntity<String> handleAccountNotActiveException(Exception exception, HttpServletRequest request) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(value = UnsupportedTransactionException.class)
-    public ResponseEntity<String>  handleUnsupportedTransactionException(Exception exception,  HttpServletRequest request) {
+    public ResponseEntity<String> handleUnsupportedTransactionException(Exception exception, HttpServletRequest request) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

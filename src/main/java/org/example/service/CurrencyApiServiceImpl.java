@@ -1,7 +1,6 @@
 package org.example.service;
 
 import org.example.model.api.CurrencyResponse;
-import org.example.model.enums.CurrencyCode;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
