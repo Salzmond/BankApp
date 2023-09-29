@@ -61,6 +61,16 @@ public class Account {
     }
 
     public Account(String iban, String name, BigDecimal balance,
+                   CurrencyCode currencyCode, Timestamp createdAt, Timestamp updatedAt) {
+        this.iban = iban;
+        this.name = name;
+        this.balance = balance;
+        this.currencyCode = currencyCode;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Account(String iban, String name, BigDecimal balance,
                    CurrencyCode currencyCode) {
         this.iban = iban;
         this.name = name;

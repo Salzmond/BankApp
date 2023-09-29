@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountDtoConverter implements Converter<AccountDto, Account> {
 
-    @Autowired
-    private ClientDtoConverter clientDtoConverter;
-
     public AccountDto toDto(Account account) {
         return new AccountDto(account.getIban(), account.getClient().getFirstName(), account.getClient().getLastName(),
                 account.getName(), account.getType(), account.getStatus(),
-                account.getBalance(), account.getCurrencyCode());
+                account.getBalance(), account.getCurrencyCode(),
+                account.getCreatedAt(),account.getUpdatedAt());
     }
 
     public Account toEntity(AccountDto accountDto) {

@@ -8,7 +8,6 @@ import org.example.model.enums.CurrencyCode;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class AccountDto {
 
@@ -35,7 +34,7 @@ public class AccountDto {
 
     public AccountDto(String iban, String clientFirstName, String clientLastName, String name, AccountType type,
                       AccountStatus status, BigDecimal balance,
-                      CurrencyCode currencyCode) {
+                      CurrencyCode currencyCode,Timestamp createdAt, Timestamp updatedAt) {
         this.iban = iban;
         this.clientFirstName = clientFirstName;
         this.clientLastName = clientLastName;
@@ -44,8 +43,8 @@ public class AccountDto {
         this.status = status;
         this.balance = balance;
         this.currencyCode = currencyCode;
-        this.createdAt = new Timestamp(new Date().getTime());
-        this.updatedAt = new Timestamp(new Date().getTime());
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getIban() {

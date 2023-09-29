@@ -10,6 +10,7 @@ import java.util.Date;
 
 public class ProductDto {
 
+
     private long id;
     private String managerFirstName;
 
